@@ -83,6 +83,11 @@ spec:
     taskRef:
       kind: Task
       name: build-base-image
+    when:
+    - input: "$(tasks.image-build-check.results.scan-result)"
+      operator: in
+      values:
+      - "fail"
     runAfter:
     - git-clone-resources
     workspaces:
@@ -104,6 +109,11 @@ spec:
     taskRef:
       kind: Task
       name: push-base-image
+    when:
+    - input: "$(tasks.image-build-check.results.scan-result)"
+      operator: in
+      values:
+      - "fail"
     runAfter:
     - build-base-image
     workspaces:
@@ -125,6 +135,11 @@ spec:
     taskRef:
       kind: Task
       name: acs-image-build-check
+    when:
+    - input: "$(tasks.image-build-check.results.scan-result)"
+      operator: in
+      values:
+      - "fail"
     runAfter:
     - push-base-image
 ##------------------------------------------------------------------
