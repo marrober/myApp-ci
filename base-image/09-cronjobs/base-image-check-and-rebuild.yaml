@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-l7p4q.l7p4q.sandbox371.opentlc.com
+            - http://http://base-image-github-ci-listener-myapp-ci.apps.skylake.demolab.local
           restartPolicy: OnFailure
