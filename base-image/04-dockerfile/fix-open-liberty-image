@@ -11,4 +11,6 @@ RUN rpm -e --nodeps --verbose dnf-data dnf dnf-plugin-subscription-manager pytho
 
 RUN rpm -e --nodeps --verbose rpm rpm-libs rpm-build-libs libsolv yum
 
+LABEL "internal-image" = "YES"
+
 USER 1001
