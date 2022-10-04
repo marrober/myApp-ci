@@ -72,7 +72,7 @@ spec:
     - name: quay-io-repository
       value: "myapp"
     - name: production-event-listener-route
-      value: http://myapp-github-ci-prod-listener-myapp-ci.apps.cluster-9mndr.9mndr.sandbox641.opentlc.com/
+      value: http://myapp-github-ci-prod-listener-myapp-ci.apps.cluster-stm8h.stm8h.sandbox2166.opentlc.com/
     - name: demolab
       value: "yes"
   workspaces:
