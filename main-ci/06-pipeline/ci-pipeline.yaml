@@ -261,6 +261,10 @@ spec:
       operator: in
       values:
       - "yes"
+    - input: "$(tasks.image-build-check.results.scan-result)"
+      operator: in
+      values:
+      - "pass"
     runAfter:
       - push-image-to-quay
     workspaces:
