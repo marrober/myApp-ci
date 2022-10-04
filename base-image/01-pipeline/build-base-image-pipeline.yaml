@@ -87,7 +87,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "fail"
+      - "pass"
     runAfter:
     - git-clone-resources
     workspaces:
