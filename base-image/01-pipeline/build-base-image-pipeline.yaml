@@ -113,7 +113,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "fail"
+      - "pass"
     runAfter:
     - build-base-image
     workspaces:
@@ -139,7 +139,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "fail"
+      - "pass"
     runAfter:
     - push-base-image
 ##------------------------------------------------------------------
