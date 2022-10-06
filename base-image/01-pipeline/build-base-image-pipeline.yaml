@@ -61,7 +61,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "pass"
+      - "fail"
     runAfter:
       - image-build-check
     workspaces:
@@ -87,7 +87,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "pass"
+      - "fail"
     runAfter:
     - git-clone-resources
     workspaces:
@@ -113,7 +113,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "pass"
+      - "fail"
     runAfter:
     - build-base-image
     workspaces:
@@ -139,7 +139,7 @@ spec:
     - input: "$(tasks.image-build-check.results.scan-result)"
       operator: in
       values:
-      - "pass"
+      - "fail"
     runAfter:
     - push-base-image
 ##------------------------------------------------------------------
