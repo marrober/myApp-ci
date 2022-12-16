@@ -74,6 +74,16 @@ spec:
     type: string
   - name: demolab                           # Indication of whether demolab is being used 'yes or no'
     type: string
+# argocd parameters
+# argocd development application name
+  - name: argocd-project-name-development
+    type: string
+  - name: argocd-revision
+    type: string
+  - name: argocd-flags
+    type: string
+  - name: argocd-version
+    type: string
   tasks:
 ##------------------------------------------------------------------
 # Git clone source code task
@@ -192,6 +202,28 @@ spec:
     workspaces:
     - name: files
       workspace: files
+##------------------------------------------------------------------
+# Iniitate the ArgoCD sync operation for the development environment
+##------------------------------------------------------------------
+  - name: sync-argocd-for-development
+    params:
+    - name: application-name
+      value: $(params.argocd-project-name-development)
+    - name: revision
+      value: $(params.argocd-revision)
+    - name: flags
+      value: $(params.argocd-flags)
+    - name: argocd-version
+      value: $(params.argocd-version)
+    taskRef:
+      kind: ClusterTask
+      name: argocd-task-sync-and-wait
+    runAfter:
+    - update-and-commit-kustomization-file-dev
+    workspaces:
+    - name: files
+      workspace: files
+
 ##------------------------------------------------------------------
 # Perform image build check
 ##------------------------------------------------------------------

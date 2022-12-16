@@ -75,6 +75,14 @@ spec:
       value: http://myapp-github-ci-prod-listener-myapp-ci.apps.skylake.demolab.local
     - name: demolab
       value: "yes"
+    - name: argocd-project-name-development
+      value: myapp-cd-development
+    - name: argocd-revision
+      value: HEAD
+    - name: argocd-flags
+      name: '--'
+    - name: argocd-version
+      value: v2.4.14
   workspaces:
   - name: files
     volumeClaimTemplate:
