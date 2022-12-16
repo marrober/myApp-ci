@@ -220,10 +220,6 @@ spec:
       name: argocd-task-sync-and-wait
     runAfter:
     - update-and-commit-kustomization-file-dev
-    workspaces:
-    - name: files
-      workspace: files
-
 ##------------------------------------------------------------------
 # Perform image build check
 ##------------------------------------------------------------------
