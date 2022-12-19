@@ -67,9 +67,9 @@ spec:
           cat ext-dockerfile.gen
           echo "------------------------------"
       image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       volumeMounts:
         - name: envparams
           mountPath: /env-params
@@ -89,9 +89,9 @@ spec:
         - $(resources.outputs.runtime-image.url)
         - .
       image: registry.redhat.io/rhel8/buildah
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       volumeMounts:
         - name: envparams
           mountPath: /env-params
@@ -126,9 +126,9 @@ spec:
         docker://$(resources.outputs.runtime-image.url):$tag
 
       image: registry.redhat.io/rhel8/buildah
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       resources: {}
     - name: get-image-repository-url
       command:
@@ -147,9 +147,9 @@ spec:
           cat $(results.new-image-repo-location.path)
 
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
   volumes:
     - emptyDir: {}
       name: envparams
