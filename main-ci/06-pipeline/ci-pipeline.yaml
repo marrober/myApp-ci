@@ -76,14 +76,14 @@ spec:
     type: string
 # argocd parameters
 # argocd development application name
-  - name: argocd-project-name-development
-    type: string
-  - name: argocd-revision
-    type: string
-  - name: argocd-flags
-    type: string
-  - name: argocd-version
-    type: string
+#  - name: argocd-project-name-development
+#    type: string
+#  - name: argocd-revision
+#    type: string
+#  - name: argocd-flags
+#    type: string
+#  - name: argocd-version
+#    type: string
   tasks:
 ##------------------------------------------------------------------
 # Git clone source code task
