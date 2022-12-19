@@ -10,3 +10,5 @@ resources:
 - 08-triggers/trigger-binding.yaml
 - 08-triggers/trigger-template.yaml
 - 09-cronjobs/base-image-check-and-rebuild.yaml
+- 10-argo-project-config/argocd-auth-token.yaml
+- 10-argo-project-config/argocd-platform-cm.yaml

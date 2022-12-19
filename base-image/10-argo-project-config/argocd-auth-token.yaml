@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-env-secret
+  namespace: myapp-ci
+data:
+  ARGOCD_AUTH_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJwcm9qOm15YXBwOm15YXBwLXN5bmMiLCJuYmYiOjE2NzEyMDU5MDQsImlhdCI6MTY3MTIwNTkwNCwianRpIjoiMWQ5MmIzYjAtMDM1Zi00ZGM2LTliMzItZWVhYWE2MTg3MDcwIn0.W3WJ8XGXGTIBbK0jf6qK9dmxZkEdWVqWWlXO0W2kKLI
