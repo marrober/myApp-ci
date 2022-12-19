@@ -66,7 +66,7 @@ spec:
           echo "------------------------------"
           cat ext-dockerfile.gen
           echo "------------------------------"
-       image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8:v1.3.0-202010231255.1617295961
+      image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
       securityContext:
         capabilities:
           add: ["SETFCAP"]
