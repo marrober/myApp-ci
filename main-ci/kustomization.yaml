@@ -24,3 +24,5 @@ resources:
 - 08-triggers/event-listener-route.yaml
 - 08-triggers/trigger-binding.yaml
 - 08-triggers/trigger-template.yaml
+- 09-argo-project-config/argocd-auth-token.yaml
+- 09-argo-project-config/argocd-platform-cm.yaml
