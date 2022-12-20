@@ -20,6 +20,7 @@ spec:
 ##------------------------------------------------------------------
 # Iniitate the ArgoCD sync operation for the development environment
 ##------------------------------------------------------------------
+  tasks:
   - name: sync-argocd-for-development
     params:
     - name: application-name
