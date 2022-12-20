@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  labels:
+    pipeline.openshift.io/type: kubernetes
+  name: argo-test-myapp-ci-pipeline
+  namespace: myapp-ci
+spec:
+  params:
+# argocd parameters
+# argocd development application name
+  - name: argocd-project-name-development
+    type: string
+  - name: argocd-revision
+    type: string
+  - name: argocd-flags
+    type: string
+  - name: argocd-version
+    type: string
+##------------------------------------------------------------------
+# Iniitate the ArgoCD sync operation for the development environment
+##------------------------------------------------------------------
+  - name: sync-argocd-for-development
+    params:
+    - name: application-name
+      value: $(params.argocd-project-name-development)
+    - name: revision
+      value: $(params.argocd-revision)
+    - name: flags
+      value: $(params.argocd-flags)
+    - name: argocd-version
+      value: $(params.argocd-version)
+    taskRef:
+      kind: ClusterTask
+      name: argocd-task-sync-and-wait

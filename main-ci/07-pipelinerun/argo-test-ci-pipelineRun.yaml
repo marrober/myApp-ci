@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: argo-test-myapp-ci-pipeline-
+  namespace: myapp-ci
+spec:
+  pipelineRef:
+    name: argo-test-myapp-ci-pipeline
+  params:
+    - name: argocd-project-name-development
+      value: "myapp-cd-development"
+    - name: argocd-revision
+      value: "HEAD"
+    - name: argocd-flags
+      value: "--insecure"
+    - name: argocd-version
+      value: "v2.4.14"
