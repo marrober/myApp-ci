@@ -32,9 +32,10 @@ spec:
         - $(resources.outputs.intermediate-image.url)
         - .
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-#      securityContext:
-#        capabilities:
-#          add: ["SETFCAP"]
+# Changes for skylake      
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       workingDir: /files/source
       resources: {}
   workspaces:
