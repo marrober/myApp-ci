@@ -31,122 +31,126 @@ spec:
   results:
     - name: commit-id
   steps:
-  - name: update-ops-repo-with-imagetag
-    env:
-      - name: GITHOSTACCESSTOKEN
-        valueFrom:
-          secretKeyRef:
-            key: "token"
-            name: "github-access-token"
-    image: quay.io/marrober/kustomize:latest
-    script: >
-      #!/bin/sh
+    - name: update-ops-repo-with-imagetag
+      env:
+        - name: GITHOSTACCESSTOKEN
+          valueFrom:
+            secretKeyRef:
+              key: "token"
+              name: "github-access-token"
+      image: quay.io/marrober/kustomize:latest
+# Changes for skylake      
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]    
+      script: >
+        #!/bin/sh
 
-      echo "Git URL : " $(params.GIT_URL)".git"
+        echo "Git URL : " $(params.GIT_URL)".git"
 
-      echo "Git Repo name : " $(params.GIT_REPO_NAME)
+        echo "Git Repo name : " $(params.GIT_REPO_NAME)
 
-      echo "Git branch for change : " $(params.GIT_BRANCH)
+        echo "Git branch for change : " $(params.GIT_BRANCH)
 
-      echo "Git branch target for pull request : " $(params.GIT_PR_TARGET_BRANCH)
+        echo "Git branch target for pull request : " $(params.GIT_PR_TARGET_BRANCH)
 
-      echo "Path to content in git repo : " $(params.GIT_PATH_TO_CONTENT)
+        echo "Path to content in git repo : " $(params.GIT_PATH_TO_CONTENT)
 
-      echo "Username for git changes : " $(params.GIT_USER_NAME)
+        echo "Username for git changes : " $(params.GIT_USER_NAME)
 
-      echo "Email address for git changes : " $(params.GIT_USER_EMAIL)
+        echo "Email address for git changes : " $(params.GIT_USER_EMAIL)
 
-      echo "Git commit comment : " $(params.GIT_COMMIT_COMMENT)
+        echo "Git commit comment : " $(params.GIT_COMMIT_COMMENT)
 
-      echo "Image URL to be patched : " $(params.IMAGE)
+        echo "Image URL to be patched : " $(params.IMAGE)
 
-      cd /workspace/files
+        cd /workspace/files
 
-      mkdir $(params.LOCATION)
+        mkdir $(params.LOCATION)
 
-      cd $(params.LOCATION)
+        cd $(params.LOCATION)
 
-      pwd
+        pwd
 
-      git config --global user.email $(params.GIT_USER_EMAIL)
+        git config --global user.email $(params.GIT_USER_EMAIL)
 
-      git config --global user.name $(params.GIT_USER_NAME)
+        git config --global user.name $(params.GIT_USER_NAME)
 
-      ls -alR
+        ls -alR
 
-      git clone https://${GITHOSTACCESSTOKEN}@$(params.GIT_URL).git
-
-      echo "-----------------------------------------------------------------"
-
-      echo "view content of directory"
-
-      echo "-----------------------------------------------------------------"
-
-      cd /workspace/files/$(params.LOCATION)/$(params.GIT_REPO_NAME)/$(params.GIT_PATH_TO_CONTENT)
-
-      ls -al
-
-      echo "-----------------------------------------------------------------"
-
-      echo "Select branch"
-
-      git checkout $(params.GIT_BRANCH)
-
-      echo "-----------------------------------------------------------------"
-
-      echo "File before change"
-
-      echo "-----------------------------------------------------------------"
-
-      cat kustomization.yaml
-
-      kustomize edit set image $(params.IMAGE)
-
-      echo "-----------------------------------------------------------------"
-
-      echo "File after change"
-
-      echo "-----------------------------------------------------------------"
-
-      cat kustomization.yaml
-
-      cd /workspace/files/$(params.LOCATION)/$(params.GIT_REPO_NAME)
-
-      git add .
-
-      git commit -m "$(params.GIT_COMMIT_COMMENT)"
-
-      echo "-----------------------------------------------------------------"
-
-      git push -u
-
-      git rev-parse HEAD > $(results.commit-id.path)
-
-      cat $(results.commit-id.path)
-
-      if [ -z "$(params.GIT_PR_TARGET_BRANCH)" ]
-
-      then
-
-        echo "Pull request is not required"
-
-      else
+        git clone https://${GITHOSTACCESSTOKEN}@$(params.GIT_URL).git
 
         echo "-----------------------------------------------------------------"
 
-        echo "Create pull request"
+        echo "view content of directory"
 
         echo "-----------------------------------------------------------------"
 
-        echo $GITHOSTACCESSTOKEN > gh-token.txt
+        cd /workspace/files/$(params.LOCATION)/$(params.GIT_REPO_NAME)/$(params.GIT_PATH_TO_CONTENT)
 
-        gh auth login --with-token < gh-token.txt
+        ls -al
 
-        rm -rf gh-token.txt
+        echo "-----------------------------------------------------------------"
 
-        gh pr create --fill --head $(params.GIT_BRANCH) --base $(params.GIT_PR_TARGET_BRANCH)
+        echo "Select branch"
 
-      fi
+        git checkout $(params.GIT_BRANCH)
+
+        echo "-----------------------------------------------------------------"
+
+        echo "File before change"
+
+        echo "-----------------------------------------------------------------"
+
+        cat kustomization.yaml
+
+        kustomize edit set image $(params.IMAGE)
+
+        echo "-----------------------------------------------------------------"
+
+        echo "File after change"
+
+        echo "-----------------------------------------------------------------"
+
+        cat kustomization.yaml
+
+        cd /workspace/files/$(params.LOCATION)/$(params.GIT_REPO_NAME)
+
+        git add .
+
+        git commit -m "$(params.GIT_COMMIT_COMMENT)"
+
+        echo "-----------------------------------------------------------------"
+
+        git push -u
+
+        git rev-parse HEAD > $(results.commit-id.path)
+
+        cat $(results.commit-id.path)
+
+        if [ -z "$(params.GIT_PR_TARGET_BRANCH)" ]
+
+        then
+
+          echo "Pull request is not required"
+
+        else
+
+          echo "-----------------------------------------------------------------"
+
+          echo "Create pull request"
+
+          echo "-----------------------------------------------------------------"
+
+          echo $GITHOSTACCESSTOKEN > gh-token.txt
+
+          gh auth login --with-token < gh-token.txt
+
+          rm -rf gh-token.txt
+
+          gh pr create --fill --head $(params.GIT_BRANCH) --base $(params.GIT_PR_TARGET_BRANCH)
+
+        fi
 
   workspaces:
     - name: files
