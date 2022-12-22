@@ -64,9 +64,10 @@ spec:
         - $(params.image-stream-location)
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
       image: registry.redhat.io/rhel8/buildah
-#      securityContext:
-#        capabilities:
-#          add: ["SETFCAP"]
+# Changes for skylake        
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       resources:
         requests:
           memory: 2Gi

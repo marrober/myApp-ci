@@ -79,7 +79,7 @@ spec:
     - name: argocd-project-name-development
       value: "myapp-cd-development"
     - name: argocd-revision
-      value: "HEAD"
+      value: "main"
     - name: argocd-flags
       value: "--insecure"
     - name: argocd-version
