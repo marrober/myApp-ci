@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: update-and-commit-kustomization-file
-  namespace: myapp-ci
 spec:
   params:
   - name: GIT_URL

@@ -4,7 +4,6 @@ metadata:
   labels:
     pipeline.openshift.io/type: kubernetes
   name: argo-test-myapp-ci-pipeline
-  namespace: myapp-ci
 spec:
   params:
 # argocd parameters

@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: argo-test-myapp-ci-pipeline-
-  namespace: myapp-ci
 spec:
   pipelineRef:
     name: argo-test-myapp-ci-pipeline

@@ -2,4 +2,3 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: myapp-runtime
-  namespace: myapp-ci

@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
   name: myapp-runtime
-  namespace: myapp-ci
 spec:
   params:
   - name: url

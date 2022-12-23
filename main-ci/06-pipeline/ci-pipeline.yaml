@@ -4,7 +4,6 @@ metadata:
   labels:
     pipeline.openshift.io/type: kubernetes
   name: myapp-ci-pipeline
-  namespace: myapp-ci
 spec:
   resources:
   - name: intermediate-image
