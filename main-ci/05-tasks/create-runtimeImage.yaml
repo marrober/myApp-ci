@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: create-runtime-image
@@ -66,7 +66,7 @@ spec:
           cat ext-dockerfile.gen
           echo "------------------------------"
       image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
-# Changes for skylake        
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -89,7 +89,7 @@ spec:
         - $(resources.outputs.runtime-image.url)
         - .
       image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -127,7 +127,7 @@ spec:
         docker://$(resources.outputs.runtime-image.url):$tag
 
       image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -149,7 +149,7 @@ spec:
           cat $(results.new-image-repo-location.path)
 
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
-# Changes for skylake        
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
