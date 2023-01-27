@@ -21,7 +21,7 @@ spec:
 
         cat kustomization.yaml
 
-      image: quay.io/marrober/kustomize:latest
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/kustomize:latest
       workingDir: /files/myapp-cd/env/overlays/01-dev
   workspaces:
   - name: files

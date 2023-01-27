@@ -34,7 +34,7 @@ spec:
         - '--root'
         - '/files/buildah-containers'
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
-      image: registry.redhat.io/rhel8/buildah
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       securityContext:
         capabilities:
           add: ["SETFCAP"]

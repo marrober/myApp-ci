@@ -14,7 +14,7 @@ spec:
       type: string
     - name: roxctl-output-format
       description : Roxctl output format - either table, json or csv
-      type: string        
+      type: string
   results:
     - name: scan-result
   steps:
@@ -33,7 +33,7 @@ spec:
             secretKeyRef:
               key: acs_central_endpoint
               name: $(params.acs_central_endpoint)
-      image: registry.access.redhat.com/ubi8/ubi:8.3-297
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/ubi:latest
       resources: {}
       script: >-
         #!/usr/bin/env bash

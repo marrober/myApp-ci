@@ -32,7 +32,7 @@ spec:
 
 #        echo "$(params.image-stream-location)"
 
-#      image: registry.redhat.io/rhel8/buildah
+#      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
 #      resources: {}
     - name: buildah-pull-image
       command:
@@ -42,8 +42,8 @@ spec:
         - '--root'
         - '/files/buildah-containers'
         - $(params.image-stream-location)
-      image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -63,8 +63,8 @@ spec:
         - '/files/buildah-containers'
         - $(params.image-stream-location)
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
-      image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -85,8 +85,8 @@ spec:
         - '--root'
         - '/files/buildah-containers'
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
-      image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
+# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]

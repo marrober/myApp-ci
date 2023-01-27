@@ -23,7 +23,7 @@ spec:
 
         curl -k -s -d "{\"repository\": \"$(params.quay-io-account)/$(params.quay-io-repository)\", \"docker_url\": \"quay.io/$(params.quay-io-account)/$(params.quay-io-repository)\", \"updated_tags\": [\"$(params.tag)\"]}" $(params.production-event-listener-route)
 
-      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       workingDir: /files/source
       resources: {}
   workspaces:

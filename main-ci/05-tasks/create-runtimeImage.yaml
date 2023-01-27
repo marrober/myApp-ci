@@ -65,7 +65,7 @@ spec:
           echo "------------------------------"
           cat ext-dockerfile.gen
           echo "------------------------------"
-      image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/s2i-rhel-8:latest
 # Changes for skylake
       securityContext:
         capabilities:
@@ -88,7 +88,7 @@ spec:
         - '-t'
         - $(resources.outputs.runtime-image.url)
         - .
-      image: registry.redhat.io/rhel8/buildah
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
 # Changes for skylake
       securityContext:
         capabilities:
@@ -126,7 +126,7 @@ spec:
 
         docker://$(resources.outputs.runtime-image.url):$tag
 
-      image: registry.redhat.io/rhel8/buildah
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
 # Changes for skylake
       securityContext:
         capabilities:

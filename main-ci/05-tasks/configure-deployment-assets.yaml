@@ -50,7 +50,7 @@ spec:
 
         ls -al ./output
 
-      image: quay.io/marrober/kustomize:latest
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/kustomize:latest
       workingDir: /files/$(params.subdirectory)
 
   workspaces:

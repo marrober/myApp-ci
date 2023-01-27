@@ -37,11 +37,11 @@ spec:
             secretKeyRef:
               key: "token"
               name: "github-access-token"
-      image: quay.io/marrober/kustomize:latest
-# Changes for skylake      
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/kustomize:latest
+# Changes for skylake
       securityContext:
         capabilities:
-          add: ["SETFCAP"]    
+          add: ["SETFCAP"]
       script: >
         #!/bin/sh
 
