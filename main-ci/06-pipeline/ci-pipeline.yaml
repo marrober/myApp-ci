@@ -270,33 +270,33 @@ spec:
 # to quay by calling the route of the event listener associated with
 # the initiation of the production git cd instance update.
 ##------------------------------------------------------------------
-  - name: dl-quay-webhook-trigger
-    params:
-      - name: quay-io-account
-        value: $(params.quay-io-account)
-      - name: quay-io-repository
-        value: $(params.quay-io-repository)
-      - name: tag
-        value: $(tasks.create-runtime-image.results.new-tag)
-      - name: production-event-listener-route
-        value: $(params.production-event-listener-route)
-    taskRef:
-      kind: Task
-      name: dl-quay-webhook-trigger
-    when:
-    - input: "$(params.demolab)"
-      operator: in
-      values:
-      - "yes"
-    - input: "$(tasks.image-build-check.results.scan-result)"
-      operator: in
-      values:
-      - "pass"
-    runAfter:
-      - push-image-to-quay
-    workspaces:
-    - name: files
-      workspace: files
+#  - name: dl-quay-webhook-trigger
+#    params:
+#      - name: quay-io-account
+#        value: $(params.quay-io-account)
+#      - name: quay-io-repository
+#        value: $(params.quay-io-repository)
+#      - name: tag
+#        value: $(tasks.create-runtime-image.results.new-tag)
+#      - name: production-event-listener-route
+#        value: $(params.production-event-listener-route)
+#    taskRef:
+#      kind: Task
+#      name: dl-quay-webhook-trigger
+#    when:
+#    - input: "$(params.demolab)"
+#      operator: in
+#      values:
+#      - "yes"
+#    - input: "$(tasks.image-build-check.results.scan-result)"
+#      operator: in
+#      values:
+#      - "pass"
+#    runAfter:
+#      - push-image-to-quay
+#    workspaces:
+#    - name: files
+#      workspace: files
 ##------------------------------------------------------------------
 # Clone the cd repository and update the kustomization file for the
 # qa environment to refer to the new tagged image.
