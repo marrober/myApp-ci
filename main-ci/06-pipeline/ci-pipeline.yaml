@@ -204,21 +204,21 @@ spec:
 ##------------------------------------------------------------------
 # Iniitate the ArgoCD sync operation for the development environment
 ##------------------------------------------------------------------
-#  - name: sync-argocd-for-development
-#    params:
-#    - name: application-name
-#      value: $(params.argocd-project-name-development)
-#    - name: revision
-#      value: $(params.argocd-revision)
-#    - name: flags
-#      value: $(params.argocd-flags)
-#    - name: argocd-version
-#      value: $(params.argocd-version)
-#    taskRef:
-#      kind: ClusterTask
-#      name: argocd-task-sync-and-wait
-#    runAfter:
-#    - update-and-commit-kustomization-file-dev
+  - name: sync-argocd-for-development
+    params:
+    - name: application-name
+      value: $(params.argocd-project-name-development)
+    - name: revision
+      value: $(params.argocd-revision)
+    - name: flags
+      value: $(params.argocd-flags)
+    - name: argocd-version
+      value: $(params.argocd-version)
+    taskRef:
+      kind: ClusterTask
+      name: argocd-task-sync-and-wait
+    runAfter:
+    - update-and-commit-kustomization-file-dev
 ##------------------------------------------------------------------
 # Perform image build check
 ##------------------------------------------------------------------
