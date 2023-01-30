@@ -69,10 +69,10 @@ spec:
   - name: quay-io-image-tag-name            # Quay.io repository image tag
     type: string
     default: "latest"
-  - name: production-event-listener-route   # Route for the curl command to spoof the quay webook when using demolab
-    type: string
-  - name: demolab                           # Indication of whether demolab is being used 'yes or no'
-    type: string
+#  - name: production-event-listener-route   # Route for the curl command to spoof the quay webook when using demolab
+#    type: string
+#  - name: demolab                           # Indication of whether demolab is being used 'yes or no'
+#    type: string
 # argocd parameters
 # argocd development application name
   - name: argocd-project-name-development

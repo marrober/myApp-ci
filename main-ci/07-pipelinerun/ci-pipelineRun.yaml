@@ -70,11 +70,11 @@ spec:
       value: "marrober"
     - name: quay-io-repository
       value: "myapp"
-    - name: production-event-listener-route
-      value: http://myapp-github-ci-prod-listener-myapp-ci.apps.skylake.demolab.local
+#    - name: production-event-listener-route
+#      value: http://myapp-github-ci-prod-listener-myapp-ci.apps.skylake.demolab.local
 #      value: http://myapp-github-ci-prod-listener-myapp-ci.apps.cluster-fchs4.fchs4.sandbox2970.opentlc.com/
-    - name: demolab
-      value: "yes"
+#    - name: demolab
+#      value: "yes"
     - name: argocd-project-name-development
       value: "myapp-cd-development"
     - name: argocd-revision

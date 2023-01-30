@@ -31,34 +31,34 @@ spec:
             name: myapp-runtime
       params:
         - name: STORAGE_DRIVER
-          value: vfs   
+          value: vfs
         - name: openshift_app_name
-          value: myapp-ci   
+          value: myapp-ci
         - name: runtime_image_name
           value: myapp-runtime
         - name: runtime_base_image
           # - open-liberty-base:2 - bad image
           # - openliberty:10 - good image
-    #      value: quay.io/marrober/open-liberty-base:2  
-          value: quay.io/marrober/openliberty:latest  
+    #      value: quay.io/marrober/open-liberty-base:2
+          value: quay.io/marrober/openliberty:latest
         - name: repo_type
           value: github.com
-        - name: myapp-cd-git-url 
+        - name: myapp-cd-git-url
           value: marrober/myApp-cd
         - name: my-app-cd-git-repo-name
           value: myApp-cd
         - name: my-app-cd-git-repo-path-to-content-development
-          value: env/01-dev      
+          value: env/01-dev
         - name: my-app-cd-git-repo-path-to-content-qa
-          value: env/02-qa     
+          value: env/02-qa
         - name: my-app-cd-git-repo-branch-qa
-          value: "qa-ready"   
-        - name: my-app-cd-git-target-branch-pr 
+          value: "qa-ready"
+        - name: my-app-cd-git-target-branch-pr
           value: "main"
         - name: my-app-cd-git-commit-comment-dev
           value: "Update from ci process - dev"
         - name: my-app-cd-git-commit-comment-qa
-          value: "Update from ci process - qa"          
+          value: "Update from ci process - qa"
         - name: my-app-cd-git-user-name
           value: "Mark Roberts"
         - name: my-app-cd-git-user-email
@@ -68,13 +68,13 @@ spec:
         - name: acs_api_token
           value: acs-secret
         - name: roxctl-output-format
-          value: "table"     
+          value: "table"
         - name: recursive-search
           value: "true"
         - name: quay-io-account
           value: "marrober"
         - name: quay-io-repository
-          value: "myapp"          
+          value: "myapp"
         - name: source-git-url
           value: $(tt.params.gitrepository.url)
         - name: gitrepository_fullname
@@ -93,6 +93,14 @@ spec:
           value: $(tt.params.commit.message)
         - name: commit_author
           value: $(tt.params.commit.author)
+        - name: argocd-project-name-development
+          value: "myapp-cd-development"
+        - name: argocd-revision
+          value: "main"
+        - name: argocd-flags
+          value: "--insecure"
+        - name: argocd-version
+          value: "v2.4.14"
       workspaces:
       - name: files
         volumeClaimTemplate:
@@ -101,7 +109,7 @@ spec:
             - ReadWriteOnce
             resources:
               requests:
-                storage: 20Gi  
+                storage: 20Gi
       - name: resources
         volumeClaimTemplate:
           spec:
@@ -110,4 +118,3 @@ spec:
             resources:
               requests:
                 storage: 5Gi
-
