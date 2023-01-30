@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.skylake.demolab.local
+            - http://base-image-github-ci-listener-myapp-ci.apps.celeron.demolab.local/
           restartPolicy: OnFailure
