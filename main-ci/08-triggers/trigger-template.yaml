@@ -93,6 +93,14 @@ spec:
           value: $(tt.params.commit.message)
         - name: commit_author
           value: $(tt.params.commit.author)
+        - name: argocd-project-name-development
+          value: "myapp-cd-development"
+        - name: argocd-revision
+          value: "main"
+        - name: argocd-flags
+          value: "--insecure"
+        - name: argocd-version
+          value: "v2.4.14"
       workspaces:
       - name: files
         volumeClaimTemplate:
