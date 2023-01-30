@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - #image: ghcr.io/chmouel/gosmee:latest
-          image: image-registry.openshift-image-registry.svc:5000/myapp-ci/gosmee
+          image: image-registry.openshift-image-registry.svc:5000/myapp-ci/gosme:latest
           imagePullPolicy: IfNotPresent
           name: gosmee
           args:
