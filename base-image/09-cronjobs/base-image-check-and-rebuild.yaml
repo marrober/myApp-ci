@@ -22,6 +22,6 @@ spec:
             - -k
             - -s
             - -d
-            - "{}"
-            - http://console-openshift-console.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com
+            - "{"trigger": "cronjob}"
+            - http://myapp-github-ci-listener-generic-myapp-ci.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com
           restartPolicy: OnFailure

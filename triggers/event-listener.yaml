@@ -1,0 +1,31 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: myapp-github-ci-listener-generic
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: github-listener-main-ci
+      interceptors:
+        - cel:
+            filter: body.repository.html_url == "https://github.com/marrober/myApp-source"
+      bindings:
+        - ref: myapp-ci-pipeline-binding
+      template:
+        ref: myapp-ci-trigger-pipeline-template
+    - name: github-listener-base-image
+      interceptors:
+        - cel:
+            filter: body.trigger == "cronjob"
+      bindings:
+        - ref: base-image-ci-pipeline-binding
+      template:
+        ref: base-image-ci-trigger-pipeline-template
+    - name: github-listener-prod-ci
+      interceptors:
+        - cel:
+            filter: body.repository == "marrober/myapp"
+      bindings:
+        - ref: myapp-ci-pipeline-prod-binding
+      template:
+        ref: myapp-ci-trigger-pipeline-prod-template

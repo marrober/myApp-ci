@@ -1,0 +1,1207 @@
+{
+    "apiVersion": "tekton.dev/v1beta1",
+    "kind": "PipelineRun",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"tekton.dev/v1beta1\",\"kind\":\"Pipeline\",\"metadata\":{\"annotations\":{},\"labels\":{\"app.kubernetes.io/instance\":\"myapp-ci-production\",\"pipeline.openshift.io/type\":\"kubernetes\"},\"name\":\"myapp-ci-pipeline-production\",\"namespace\":\"myapp-ci\"},\"spec\":{\"params\":[{\"name\":\"repo_type\",\"type\":\"string\"},{\"name\":\"myapp-cd-git-url\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-repo-name\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-repo-path-to-content\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-repo-branch\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-target-branch-pr\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-commit-comment\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-user-name\",\"type\":\"string\"},{\"name\":\"my-app-cd-git-user-email\",\"type\":\"string\"},{\"name\":\"acs_central_endpoint\",\"type\":\"string\"},{\"name\":\"acs_api_token\",\"type\":\"string\"},{\"name\":\"roxctl-output-format\",\"type\":\"string\"},{\"name\":\"recursive-search\",\"type\":\"string\"},{\"name\":\"image\",\"type\":\"string\"}],\"tasks\":[{\"name\":\"update-and-commit-kustomization-file\",\"params\":[{\"name\":\"GIT_URL\",\"value\":\"$(params.repo_type)/$(params.myapp-cd-git-url)\"},{\"name\":\"GIT_REPO_NAME\",\"value\":\"$(params.my-app-cd-git-repo-name)\"},{\"name\":\"GIT_BRANCH\",\"value\":\"$(params.my-app-cd-git-repo-branch)\"},{\"name\":\"GIT_PR_TARGET_BRANCH\",\"value\":\"$(params.my-app-cd-git-target-branch-pr)\"},{\"name\":\"GIT_PATH_TO_CONTENT\",\"value\":\"$(params.my-app-cd-git-repo-path-to-content)\"},{\"name\":\"GIT_USER_NAME\",\"value\":\"$(params.my-app-cd-git-user-name)\"},{\"name\":\"GIT_USER_EMAIL\",\"value\":\"$(params.my-app-cd-git-user-email)\"},{\"name\":\"GIT_COMMIT_COMMENT\",\"value\":\"$(params.my-app-cd-git-commit-comment)\"},{\"name\":\"IMAGE\",\"value\":\"$(params.image)\"},{\"name\":\"LOCATION\",\"value\":\"production\"}],\"taskRef\":{\"kind\":\"Task\",\"name\":\"update-and-commit-kustomization-file\"},\"workspaces\":[{\"name\":\"files\",\"workspace\":\"resources\"}]},{\"name\":\"set-commit-status-pending\",\"params\":[{\"name\":\"GIT_REPO\",\"value\":\"$(params.myapp-cd-git-url)\"},{\"name\":\"REPO\",\"value\":\"$(params.my-app-cd-git-repo-name)\"},{\"name\":\"GIT_TOKEN_SECRET_NAME\",\"value\":\"github-access-token\"},{\"name\":\"GIT_TOKEN_SECRET_KEY\",\"value\":\"token\"},{\"name\":\"COMMIT_SHA\",\"value\":\"$(tasks.update-and-commit-kustomization-file.results.commit-id)\"},{\"name\":\"DESCRIPTION\",\"value\":\"Pending status on commit to branch $(params.my-app-cd-git-repo-branch)\"},{\"name\":\"CONTEXT\",\"value\":\"continuous-integration/Tekton\"},{\"name\":\"STATE\",\"value\":\"pending\"}],\"runAfter\":[\"update-and-commit-kustomization-file\"],\"taskRef\":{\"kind\":\"Task\",\"name\":\"set-commit-status\"}},{\"name\":\"git-clone-resources-cd\",\"params\":[{\"name\":\"url\",\"value\":\"https://$(params.repo_type)/$(params.myapp-cd-git-url).git\"},{\"name\":\"revision\",\"value\":\"$(params.my-app-cd-git-repo-branch)\"},{\"name\":\"verbose\",\"value\":\"false\"}],\"runAfter\":[\"set-commit-status-pending\"],\"taskRef\":{\"kind\":\"ClusterTask\",\"name\":\"git-clone\"},\"workspaces\":[{\"name\":\"output\",\"workspace\":\"resources\"}]},{\"name\":\"configure-deployment-assets\",\"params\":[{\"name\":\"subdirectory\",\"value\":\"$(params.my-app-cd-git-repo-path-to-content)\"}],\"runAfter\":[\"git-clone-resources-cd\"],\"taskRef\":{\"kind\":\"Task\",\"name\":\"configure-deployment-assets\"},\"workspaces\":[{\"name\":\"files\",\"workspace\":\"resources\"}]},{\"name\":\"resource-deployment-check\",\"params\":[{\"name\":\"acs_central_endpoint\",\"value\":\"$(params.acs_central_endpoint)\"},{\"name\":\"acs_api_token\",\"value\":\"$(params.acs_api_token)\"},{\"name\":\"source_location\",\"value\":\"$(params.my-app-cd-git-repo-path-to-content)\"},{\"name\":\"recursive-search\",\"value\":\"$(params.recursive-search)\"},{\"name\":\"roxctl-output-format\",\"value\":\"$(params.roxctl-output-format)\"}],\"runAfter\":[\"configure-deployment-assets\"],\"taskRef\":{\"kind\":\"Task\",\"name\":\"acs-deployment-check\"},\"workspaces\":[{\"name\":\"files\",\"workspace\":\"resources\"}]},{\"name\":\"set-commit-status\",\"params\":[{\"name\":\"GIT_REPO\",\"value\":\"$(params.myapp-cd-git-url)\"},{\"name\":\"REPO\",\"value\":\"$(params.my-app-cd-git-repo-name)\"},{\"name\":\"GIT_TOKEN_SECRET_NAME\",\"value\":\"github-access-token\"},{\"name\":\"GIT_TOKEN_SECRET_KEY\",\"value\":\"token\"},{\"name\":\"COMMIT_SHA\",\"value\":\"$(tasks.update-and-commit-kustomization-file.results.commit-id)\"},{\"name\":\"DESCRIPTION\",\"value\":\"Success status on commit to branch $(params.my-app-cd-git-repo-branch)\"},{\"name\":\"CONTEXT\",\"value\":\"continuous-integration/Tekton\"},{\"name\":\"STATE\",\"value\":\"success\"}],\"runAfter\":[\"resource-deployment-check\"],\"taskRef\":{\"kind\":\"Task\",\"name\":\"set-commit-status\"},\"when\":[{\"input\":\"$(tasks.resource-deployment-check.results.scan-result)\",\"operator\":\"in\",\"values\":[\"pass\"]}]}],\"workspaces\":[{\"name\":\"resources\"}]}}\n"
+        },
+        "creationTimestamp": "2023-02-07T10:35:13Z",
+        "generateName": "myapp-ci-prod-tr-",
+        "generation": 1,
+        "labels": {
+            "app.kubernetes.io/instance": "myapp-ci-production",
+            "pipeline.openshift.io/type": "kubernetes",
+            "tekton.dev/pipeline": "myapp-ci-pipeline-production",
+            "triggers.tekton.dev/eventlistener": "myapp-github-ci-listener-generic",
+            "triggers.tekton.dev/trigger": "github-listener-prod-ci",
+            "triggers.tekton.dev/triggers-eventid": "6c0df2ba-7acf-4f43-b1ed-34c704250afd"
+        },
+        "name": "myapp-ci-prod-tr-g6b9x",
+        "namespace": "myapp-ci",
+        "resourceVersion": "390637",
+        "uid": "5d1c91b9-003e-44d9-9ddd-f89c3324dfe5"
+    },
+    "spec": {
+        "params": [
+            {
+                "name": "repo_type",
+                "value": "github.com"
+            },
+            {
+                "name": "myapp-cd-git-url",
+                "value": "marrober/myApp-cd"
+            },
+            {
+                "name": "my-app-cd-git-repo-name",
+                "value": "myApp-cd"
+            },
+            {
+                "name": "my-app-cd-git-repo-path-to-content",
+                "value": "env/03-production"
+            },
+            {
+                "name": "my-app-cd-git-repo-branch",
+                "value": "production-ready"
+            },
+            {
+                "name": "my-app-cd-git-target-branch-pr",
+                "value": "production"
+            },
+            {
+                "name": "my-app-cd-git-commit-comment",
+                "value": "Update from ci process - production"
+            },
+            {
+                "name": "my-app-cd-git-user-name",
+                "value": "Mark Roberts"
+            },
+            {
+                "name": "my-app-cd-git-user-email",
+                "value": "mroberts@redhat.com"
+            },
+            {
+                "name": "acs_central_endpoint",
+                "value": "acs-secret"
+            },
+            {
+                "name": "acs_api_token",
+                "value": "acs-secret"
+            },
+            {
+                "name": "roxctl-output-format",
+                "value": "table"
+            },
+            {
+                "name": "recursive-search",
+                "value": "true"
+            },
+            {
+                "name": "image",
+                "value": "quay.io/marrober/myapp:905d-rfkhn"
+            }
+        ],
+        "pipelineRef": {
+            "name": "myapp-ci-pipeline-production"
+        },
+        "serviceAccountName": "pipeline",
+        "timeout": "1h0m0s",
+        "workspaces": [
+            {
+                "name": "resources",
+                "volumeClaimTemplate": {
+                    "metadata": {
+                        "creationTimestamp": null
+                    },
+                    "spec": {
+                        "accessModes": [
+                            "ReadWriteOnce"
+                        ],
+                        "resources": {
+                            "requests": {
+                                "storage": "5Gi"
+                            }
+                        }
+                    },
+                    "status": {}
+                }
+            }
+        ]
+    },
+    "status": {
+        "completionTime": "2023-02-07T10:36:24Z",
+        "conditions": [
+            {
+                "lastTransitionTime": "2023-02-07T10:36:24Z",
+                "message": "Tasks Completed: 6 (Failed: 0, Cancelled 0), Skipped: 0",
+                "reason": "Succeeded",
+                "status": "True",
+                "type": "Succeeded"
+            }
+        ],
+        "pipelineSpec": {
+            "params": [
+                {
+                    "name": "repo_type",
+                    "type": "string"
+                },
+                {
+                    "name": "myapp-cd-git-url",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-repo-name",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-repo-path-to-content",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-repo-branch",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-target-branch-pr",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-commit-comment",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-user-name",
+                    "type": "string"
+                },
+                {
+                    "name": "my-app-cd-git-user-email",
+                    "type": "string"
+                },
+                {
+                    "name": "acs_central_endpoint",
+                    "type": "string"
+                },
+                {
+                    "name": "acs_api_token",
+                    "type": "string"
+                },
+                {
+                    "name": "roxctl-output-format",
+                    "type": "string"
+                },
+                {
+                    "name": "recursive-search",
+                    "type": "string"
+                },
+                {
+                    "name": "image",
+                    "type": "string"
+                }
+            ],
+            "tasks": [
+                {
+                    "name": "update-and-commit-kustomization-file",
+                    "params": [
+                        {
+                            "name": "GIT_URL",
+                            "value": "github.com/marrober/myApp-cd"
+                        },
+                        {
+                            "name": "GIT_REPO_NAME",
+                            "value": "myApp-cd"
+                        },
+                        {
+                            "name": "GIT_BRANCH",
+                            "value": "production-ready"
+                        },
+                        {
+                            "name": "GIT_PR_TARGET_BRANCH",
+                            "value": "production"
+                        },
+                        {
+                            "name": "GIT_PATH_TO_CONTENT",
+                            "value": "env/03-production"
+                        },
+                        {
+                            "name": "GIT_USER_NAME",
+                            "value": "Mark Roberts"
+                        },
+                        {
+                            "name": "GIT_USER_EMAIL",
+                            "value": "mroberts@redhat.com"
+                        },
+                        {
+                            "name": "GIT_COMMIT_COMMENT",
+                            "value": "Update from ci process - production"
+                        },
+                        {
+                            "name": "IMAGE",
+                            "value": "quay.io/marrober/myapp:905d-rfkhn"
+                        },
+                        {
+                            "name": "LOCATION",
+                            "value": "production"
+                        }
+                    ],
+                    "taskRef": {
+                        "kind": "Task",
+                        "name": "update-and-commit-kustomization-file"
+                    },
+                    "workspaces": [
+                        {
+                            "name": "files",
+                            "workspace": "resources"
+                        }
+                    ]
+                },
+                {
+                    "name": "set-commit-status-pending",
+                    "params": [
+                        {
+                            "name": "GIT_REPO",
+                            "value": "marrober/myApp-cd"
+                        },
+                        {
+                            "name": "REPO",
+                            "value": "myApp-cd"
+                        },
+                        {
+                            "name": "GIT_TOKEN_SECRET_NAME",
+                            "value": "github-access-token"
+                        },
+                        {
+                            "name": "GIT_TOKEN_SECRET_KEY",
+                            "value": "token"
+                        },
+                        {
+                            "name": "COMMIT_SHA",
+                            "value": "$(tasks.update-and-commit-kustomization-file.results.commit-id)"
+                        },
+                        {
+                            "name": "DESCRIPTION",
+                            "value": "Pending status on commit to branch production-ready"
+                        },
+                        {
+                            "name": "CONTEXT",
+                            "value": "continuous-integration/Tekton"
+                        },
+                        {
+                            "name": "STATE",
+                            "value": "pending"
+                        }
+                    ],
+                    "runAfter": [
+                        "update-and-commit-kustomization-file"
+                    ],
+                    "taskRef": {
+                        "kind": "Task",
+                        "name": "set-commit-status"
+                    }
+                },
+                {
+                    "name": "git-clone-resources-cd",
+                    "params": [
+                        {
+                            "name": "url",
+                            "value": "https://github.com/marrober/myApp-cd.git"
+                        },
+                        {
+                            "name": "revision",
+                            "value": "production-ready"
+                        },
+                        {
+                            "name": "verbose",
+                            "value": "false"
+                        }
+                    ],
+                    "runAfter": [
+                        "set-commit-status-pending"
+                    ],
+                    "taskRef": {
+                        "kind": "ClusterTask",
+                        "name": "git-clone"
+                    },
+                    "workspaces": [
+                        {
+                            "name": "output",
+                            "workspace": "resources"
+                        }
+                    ]
+                },
+                {
+                    "name": "configure-deployment-assets",
+                    "params": [
+                        {
+                            "name": "subdirectory",
+                            "value": "env/03-production"
+                        }
+                    ],
+                    "runAfter": [
+                        "git-clone-resources-cd"
+                    ],
+                    "taskRef": {
+                        "kind": "Task",
+                        "name": "configure-deployment-assets"
+                    },
+                    "workspaces": [
+                        {
+                            "name": "files",
+                            "workspace": "resources"
+                        }
+                    ]
+                },
+                {
+                    "name": "resource-deployment-check",
+                    "params": [
+                        {
+                            "name": "acs_central_endpoint",
+                            "value": "acs-secret"
+                        },
+                        {
+                            "name": "acs_api_token",
+                            "value": "acs-secret"
+                        },
+                        {
+                            "name": "source_location",
+                            "value": "env/03-production"
+                        },
+                        {
+                            "name": "recursive-search",
+                            "value": "true"
+                        },
+                        {
+                            "name": "roxctl-output-format",
+                            "value": "table"
+                        }
+                    ],
+                    "runAfter": [
+                        "configure-deployment-assets"
+                    ],
+                    "taskRef": {
+                        "kind": "Task",
+                        "name": "acs-deployment-check"
+                    },
+                    "workspaces": [
+                        {
+                            "name": "files",
+                            "workspace": "resources"
+                        }
+                    ]
+                },
+                {
+                    "name": "set-commit-status",
+                    "params": [
+                        {
+                            "name": "GIT_REPO",
+                            "value": "marrober/myApp-cd"
+                        },
+                        {
+                            "name": "REPO",
+                            "value": "myApp-cd"
+                        },
+                        {
+                            "name": "GIT_TOKEN_SECRET_NAME",
+                            "value": "github-access-token"
+                        },
+                        {
+                            "name": "GIT_TOKEN_SECRET_KEY",
+                            "value": "token"
+                        },
+                        {
+                            "name": "COMMIT_SHA",
+                            "value": "$(tasks.update-and-commit-kustomization-file.results.commit-id)"
+                        },
+                        {
+                            "name": "DESCRIPTION",
+                            "value": "Success status on commit to branch production-ready"
+                        },
+                        {
+                            "name": "CONTEXT",
+                            "value": "continuous-integration/Tekton"
+                        },
+                        {
+                            "name": "STATE",
+                            "value": "success"
+                        }
+                    ],
+                    "runAfter": [
+                        "resource-deployment-check"
+                    ],
+                    "taskRef": {
+                        "kind": "Task",
+                        "name": "set-commit-status"
+                    },
+                    "when": [
+                        {
+                            "input": "$(tasks.resource-deployment-check.results.scan-result)",
+                            "operator": "in",
+                            "values": [
+                                "pass"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "workspaces": [
+                {
+                    "name": "resources"
+                }
+            ]
+        },
+        "startTime": "2023-02-07T10:35:13Z",
+        "taskRuns": {
+            "myapp-ci-prod-tr-g6b9x-configure-deployment-assets": {
+                "pipelineTaskName": "configure-deployment-assets",
+                "status": {
+                    "completionTime": "2023-02-07T10:36:05Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:36:05Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-configure-deployment-assets-pod",
+                    "startTime": "2023-02-07T10:35:55Z",
+                    "steps": [
+                        {
+                            "container": "step-configure-deployment-assets",
+                            "imageID": "quay.io/marrober/kustomize@sha256:47082b5a522ec2891b1cc209f636076ff59e3ba4933013ac42f8e06a5eae1a72",
+                            "name": "configure-deployment-assets",
+                            "terminated": {
+                                "containerID": "cri-o://925cd35e49b5f60b28895a67d8d4ad3dfec614994b6a984fb415f8598d9f0905",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:36:04Z",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:36:01Z"
+                            }
+                        }
+                    ],
+                    "taskSpec": {
+                        "params": [
+                            {
+                                "description": "location of deployment assets in the workspace",
+                                "name": "subdirectory",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "image": "quay.io/marrober/kustomize:latest",
+                                "name": "configure-deployment-assets",
+                                "resources": {},
+                                "script": "#!/usr/bin/env bash\nset +x\nls -al\necho \"--------------------------------------------------------------------\"\necho \" Kustomization file \"\necho \"--------------------------------------------------------------------\"\ncat kustomization.yaml\nkustomize build\necho \"--------------------------------------------------------------------\"\necho \" Processed content \"\necho \"--------------------------------------------------------------------\"\nkustomize build \u003e configured-deployment.yaml\nmkdir output\necho \"--------------------------------------------------------------------\"\necho \" Split into individual files for analysis \"\necho \"--------------------------------------------------------------------\"\n\nkubectl-slice -f configured-deployment.yaml -o ./output\nls -al ./output",
+                                "workingDir": "/files/env/03-production"
+                            }
+                        ],
+                        "workspaces": [
+                            {
+                                "mountPath": "/files",
+                                "name": "files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "myapp-ci-prod-tr-g6b9x-git-clone-resources-cd": {
+                "pipelineTaskName": "git-clone-resources-cd",
+                "status": {
+                    "completionTime": "2023-02-07T10:35:55Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:35:55Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-git-clone-resources-cd-pod",
+                    "startTime": "2023-02-07T10:35:36Z",
+                    "steps": [
+                        {
+                            "container": "step-clone",
+                            "imageID": "registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c",
+                            "name": "clone",
+                            "terminated": {
+                                "containerID": "cri-o://2f4f03210783cadd419546fbe4135d55b4a828a5d89118d8056318b7889655a5",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:35:54Z",
+                                "message": "[{\"key\":\"commit\",\"value\":\"7cc5859c2ec13f571925dc755c5473d1b67f2b98\",\"type\":1},{\"key\":\"url\",\"value\":\"https://github.com/marrober/myApp-cd.git\",\"type\":1}]",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:35:53Z"
+                            }
+                        }
+                    ],
+                    "taskResults": [
+                        {
+                            "name": "commit",
+                            "type": "string",
+                            "value": "7cc5859c2ec13f571925dc755c5473d1b67f2b98"
+                        },
+                        {
+                            "name": "url",
+                            "type": "string",
+                            "value": "https://github.com/marrober/myApp-cd.git"
+                        }
+                    ],
+                    "taskSpec": {
+                        "description": "These Tasks are Git tasks to work with repositories used by other tasks in your Pipeline.\nThe git-clone Task will clone a repo from the provided url into the output Workspace. By default the repo will be cloned into the root of your Workspace. You can clone into a subdirectory by setting this Task's subdirectory param. This Task also supports sparse checkouts. To perform a sparse checkout, pass a list of comma separated directory patterns to this Task's sparseCheckoutDirectories param.",
+                        "params": [
+                            {
+                                "description": "Repository URL to clone from.",
+                                "name": "url",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "Revision to checkout. (branch, tag, sha, ref, etc...)",
+                                "name": "revision",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "Refspec to fetch before checking out revision.",
+                                "name": "refspec",
+                                "type": "string"
+                            },
+                            {
+                                "default": "true",
+                                "description": "Initialize and fetch git submodules.",
+                                "name": "submodules",
+                                "type": "string"
+                            },
+                            {
+                                "default": "1",
+                                "description": "Perform a shallow clone, fetching only the most recent N commits.",
+                                "name": "depth",
+                                "type": "string"
+                            },
+                            {
+                                "default": "true",
+                                "description": "Set the `http.sslVerify` global git config. Setting this to `false` is not advised unless you are sure that you trust your git remote.",
+                                "name": "sslVerify",
+                                "type": "string"
+                            },
+                            {
+                                "default": "ca-bundle.crt",
+                                "description": "file name of mounted crt using ssl-ca-directory workspace. default value is ca-bundle.crt.",
+                                "name": "crtFileName",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "Subdirectory inside the `output` Workspace to clone the repo into.",
+                                "name": "subdirectory",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "Define the directory patterns to match or exclude when performing a sparse checkout.",
+                                "name": "sparseCheckoutDirectories",
+                                "type": "string"
+                            },
+                            {
+                                "default": "true",
+                                "description": "Clean out the contents of the destination directory if it already exists before cloning.",
+                                "name": "deleteExisting",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "HTTP proxy server for non-SSL requests.",
+                                "name": "httpProxy",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "HTTPS proxy server for SSL requests.",
+                                "name": "httpsProxy",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "description": "Opt out of proxying HTTP/HTTPS requests.",
+                                "name": "noProxy",
+                                "type": "string"
+                            },
+                            {
+                                "default": "true",
+                                "description": "Log the commands that are executed during `git-clone`'s operation.",
+                                "name": "verbose",
+                                "type": "string"
+                            },
+                            {
+                                "default": "registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c",
+                                "description": "The image providing the git-init binary that this Task runs.",
+                                "name": "gitInitImage",
+                                "type": "string"
+                            },
+                            {
+                                "default": "/tekton/home",
+                                "description": "Absolute path to the user's home directory.\n",
+                                "name": "userHome",
+                                "type": "string"
+                            }
+                        ],
+                        "results": [
+                            {
+                                "description": "The precise commit SHA that was fetched by this Task.",
+                                "name": "commit",
+                                "type": "string"
+                            },
+                            {
+                                "description": "The precise URL that was fetched by this Task.",
+                                "name": "url",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "HOME",
+                                        "value": "/tekton/home"
+                                    },
+                                    {
+                                        "name": "PARAM_URL",
+                                        "value": "https://github.com/marrober/myApp-cd.git"
+                                    },
+                                    {
+                                        "name": "PARAM_REVISION",
+                                        "value": "production-ready"
+                                    },
+                                    {
+                                        "name": "PARAM_REFSPEC"
+                                    },
+                                    {
+                                        "name": "PARAM_SUBMODULES",
+                                        "value": "true"
+                                    },
+                                    {
+                                        "name": "PARAM_DEPTH",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "PARAM_SSL_VERIFY",
+                                        "value": "true"
+                                    },
+                                    {
+                                        "name": "PARAM_CRT_FILENAME",
+                                        "value": "ca-bundle.crt"
+                                    },
+                                    {
+                                        "name": "PARAM_SUBDIRECTORY"
+                                    },
+                                    {
+                                        "name": "PARAM_DELETE_EXISTING",
+                                        "value": "true"
+                                    },
+                                    {
+                                        "name": "PARAM_HTTP_PROXY"
+                                    },
+                                    {
+                                        "name": "PARAM_HTTPS_PROXY"
+                                    },
+                                    {
+                                        "name": "PARAM_NO_PROXY"
+                                    },
+                                    {
+                                        "name": "PARAM_VERBOSE",
+                                        "value": "false"
+                                    },
+                                    {
+                                        "name": "PARAM_SPARSE_CHECKOUT_DIRECTORIES"
+                                    },
+                                    {
+                                        "name": "PARAM_USER_HOME",
+                                        "value": "/tekton/home"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_OUTPUT_PATH",
+                                        "value": "/workspace/output"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_SSH_DIRECTORY_BOUND",
+                                        "value": "false"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_SSH_DIRECTORY_PATH"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND",
+                                        "value": "false"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_BASIC_AUTH_DIRECTORY_PATH"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_SSL_CA_DIRECTORY_BOUND",
+                                        "value": "false"
+                                    },
+                                    {
+                                        "name": "WORKSPACE_SSL_CA_DIRECTORY_PATH"
+                                    }
+                                ],
+                                "image": "registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c",
+                                "name": "clone",
+                                "resources": {},
+                                "script": "#!/usr/bin/env sh\nset -eu\n\nif [ \"${PARAM_VERBOSE}\" = \"true\" ] ; then\n  set -x\nfi\n\n\nif [ \"${WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND}\" = \"true\" ] ; then\n  cp \"${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.git-credentials\" \"${PARAM_USER_HOME}/.git-credentials\"\n  cp \"${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.gitconfig\" \"${PARAM_USER_HOME}/.gitconfig\"\n  chmod 400 \"${PARAM_USER_HOME}/.git-credentials\"\n  chmod 400 \"${PARAM_USER_HOME}/.gitconfig\"\nfi\n\nif [ \"${WORKSPACE_SSH_DIRECTORY_BOUND}\" = \"true\" ] ; then\n  cp -R \"${WORKSPACE_SSH_DIRECTORY_PATH}\" \"${PARAM_USER_HOME}\"/.ssh\n  chmod 700 \"${PARAM_USER_HOME}\"/.ssh\n  chmod -R 400 \"${PARAM_USER_HOME}\"/.ssh/*\nfi\n\nif [ \"${WORKSPACE_SSL_CA_DIRECTORY_BOUND}\" = \"true\" ] ; then\n   export GIT_SSL_CAPATH=\"${WORKSPACE_SSL_CA_DIRECTORY_PATH}\"\n   if [ \"${PARAM_CRT_FILENAME}\" != \"\" ] ; then\n      export GIT_SSL_CAINFO=\"${WORKSPACE_SSL_CA_DIRECTORY_PATH}/${PARAM_CRT_FILENAME}\"\n   fi\nfi\nCHECKOUT_DIR=\"${WORKSPACE_OUTPUT_PATH}/${PARAM_SUBDIRECTORY}\"\n\ncleandir() {\n  # Delete any existing contents of the repo directory if it exists.\n  #\n  # We don't just \"rm -rf ${CHECKOUT_DIR}\" because ${CHECKOUT_DIR} might be \"/\"\n  # or the root of a mounted volume.\n  if [ -d \"${CHECKOUT_DIR}\" ] ; then\n    # Delete non-hidden files and directories\n    rm -rf \"${CHECKOUT_DIR:?}\"/*\n    # Delete files and directories starting with . but excluding ..\n    rm -rf \"${CHECKOUT_DIR}\"/.[!.]*\n    # Delete files and directories starting with .. plus any other character\n    rm -rf \"${CHECKOUT_DIR}\"/..?*\n  fi\n}\n\nif [ \"${PARAM_DELETE_EXISTING}\" = \"true\" ] ; then\n  cleandir\nfi\n\ntest -z \"${PARAM_HTTP_PROXY}\" || export HTTP_PROXY=\"${PARAM_HTTP_PROXY}\"\ntest -z \"${PARAM_HTTPS_PROXY}\" || export HTTPS_PROXY=\"${PARAM_HTTPS_PROXY}\"\ntest -z \"${PARAM_NO_PROXY}\" || export NO_PROXY=\"${PARAM_NO_PROXY}\"\n\n/ko-app/git-init \\\n  -url=\"${PARAM_URL}\" \\\n  -revision=\"${PARAM_REVISION}\" \\\n  -refspec=\"${PARAM_REFSPEC}\" \\\n  -path=\"${CHECKOUT_DIR}\" \\\n  -sslVerify=\"${PARAM_SSL_VERIFY}\" \\\n  -submodules=\"${PARAM_SUBMODULES}\" \\\n  -depth=\"${PARAM_DEPTH}\" \\\n  -sparseCheckoutDirectories=\"${PARAM_SPARSE_CHECKOUT_DIRECTORIES}\"\ncd \"${CHECKOUT_DIR}\"\nRESULT_SHA=\"$(git rev-parse HEAD)\"\nEXIT_CODE=\"$?\"\nif [ \"${EXIT_CODE}\" != 0 ] ; then\n  exit \"${EXIT_CODE}\"\nfi\nprintf \"%s\" \"${RESULT_SHA}\" \u003e \"/tekton/results/commit\"\nprintf \"%s\" \"${PARAM_URL}\" \u003e \"/tekton/results/url\"\n",
+                                "securityContext": {
+                                    "runAsNonRoot": true,
+                                    "runAsUser": 65532
+                                }
+                            }
+                        ],
+                        "workspaces": [
+                            {
+                                "description": "The git repo will be cloned onto the volume backing this Workspace.",
+                                "name": "output"
+                            },
+                            {
+                                "description": "A .ssh directory with private key, known_hosts, config, etc. Copied to\nthe user's home before git commands are executed. Used to authenticate\nwith the git remote when performing the clone. Binding a Secret to this\nWorkspace is strongly recommended over other volume types.\n",
+                                "name": "ssh-directory",
+                                "optional": true
+                            },
+                            {
+                                "description": "A Workspace containing a .gitconfig and .git-credentials file. These\nwill be copied to the user's home before any git commands are run. Any\nother files in this Workspace are ignored. It is strongly recommended\nto use ssh-directory over basic-auth whenever possible and to bind a\nSecret to this Workspace over other volume types.\n",
+                                "name": "basic-auth",
+                                "optional": true
+                            },
+                            {
+                                "description": "A workspace containing CA certificates, this will be used by Git to\nverify the peer with when fetching or pushing over HTTPS.\n",
+                                "name": "ssl-ca-directory",
+                                "optional": true
+                            }
+                        ]
+                    }
+                }
+            },
+            "myapp-ci-prod-tr-g6b9x-resource-deployment-check": {
+                "pipelineTaskName": "resource-deployment-check",
+                "status": {
+                    "completionTime": "2023-02-07T10:36:17Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:36:17Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-resource-deployment-check-pod",
+                    "startTime": "2023-02-07T10:36:05Z",
+                    "steps": [
+                        {
+                            "container": "step-rox-deployment-check",
+                            "imageID": "registry.access.redhat.com/ubi8/ubi@sha256:1638782b968b8c36a29ddca2e71e9511c6cd0490fa595fac3d07593f4220e806",
+                            "name": "rox-deployment-check",
+                            "terminated": {
+                                "containerID": "cri-o://370a0312ec73c53255e7d41209d95e23d18888ff3c9f46ff74a36e132398bfe5",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:36:17Z",
+                                "message": "[{\"key\":\"scan-result\",\"value\":\"pass\",\"type\":1}]",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:36:11Z"
+                            }
+                        }
+                    ],
+                    "taskResults": [
+                        {
+                            "name": "scan-result",
+                            "type": "string",
+                            "value": "pass"
+                        }
+                    ],
+                    "taskSpec": {
+                        "params": [
+                            {
+                                "description": "Secret containing the address:port tuple for ACS Central (example - rox.stackrox.io:443)",
+                                "name": "acs_central_endpoint",
+                                "type": "string"
+                            },
+                            {
+                                "description": "Secret containing the ACS API token with CI permissions",
+                                "name": "acs_api_token",
+                                "type": "string"
+                            },
+                            {
+                                "description": "Location of the file(s) to be scanned",
+                                "name": "source_location",
+                                "type": "string"
+                            },
+                            {
+                                "description": "search for files recursively in directory tree",
+                                "name": "recursive-search",
+                                "type": "string"
+                            },
+                            {
+                                "description": "Roxctl output format - either table, json or csv",
+                                "name": "roxctl-output-format",
+                                "type": "string"
+                            }
+                        ],
+                        "results": [
+                            {
+                                "name": "scan-result",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "ROX_API_TOKEN",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "acs_api_token",
+                                                "name": "acs-secret"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "ROX_CENTRAL_ENDPOINT",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "acs_central_endpoint",
+                                                "name": "acs-secret"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "registry.access.redhat.com/ubi8/ubi:8.3-297",
+                                "name": "rox-deployment-check",
+                                "resources": {},
+                                "script": "#!/usr/bin/env bash\nset +x\ncurl -s -k -L -H \"Authorization: Bearer $ROX_API_TOKEN\" https://$ROX_CENTRAL_ENDPOINT/api/cli/download/roxctl-linux --output ./roxctl \u003e /dev/null; echo \"Getting roxctl\"\nchmod +x ./roxctl  \u003e /dev/null\nyum install jq -y -q\nif [[ \"true\" == \"true\" ]]; then\n\n\n  fileList=`find /files/env/03-production/output \\\n  -name '*.yaml' -o -name '*.yml'`\n\nelse\n\n\n  fileList=`ls /files/env/03-production/output/*.y*ml`\n\nfi\nfailTask=\"false\"\nfor file in $fileList\ndo\n\n\n #var=$(grep \"apiVersion: route.openshift.io\" \"$file\")\n\n  #result1=$?\n\n  #var=$(grep \"kustomize.config.k8s.io\" \"$file\")\n\n  #result2=$?\n\n  #if [ $result1 == \"0\" ] || [ $result2 == \"0\" ] ; then\n\n    #echo \".\"\n\n  #else\n\n    echo \"Deployment check on file : $file\"\n\n    ./roxctl deployment check --insecure-skip-tls-verify \\\n    -e $ROX_CENTRAL_ENDPOINT --file $file -o table \\\n    --retries 0 \u003e fileScanResult 2\u003e\u00261\n\n    cat fileScanResult\n\n    fileScanResultNewVar=`cat fileScanResult`\n\n    if [[ \"$fileScanResultNewVar\" == *\"failed policies found:\"* ]]; then\n      failTask=true\n    fi\n\n  #fi\ndone\nif [[ \"$failTask\" == \"true\" ]]; then\n\n\n  echo \"Setting overall result to fail\"\n\n  echo -n \"fail\" | tee /tekton/results/scan-result \u003e\u003e /dev/null\n\nelse\n\n\n  echo \"Setting overall result to pass\"\n\n  echo -n \"pass\" | tee /tekton/results/scan-result \u003e\u003e /dev/null\n\nfi",
+                                "workingDir": "/workspace"
+                            }
+                        ],
+                        "workspaces": [
+                            {
+                                "mountPath": "/files",
+                                "name": "files"
+                            }
+                        ]
+                    }
+                }
+            },
+            "myapp-ci-prod-tr-g6b9x-set-commit-status": {
+                "pipelineTaskName": "set-commit-status",
+                "status": {
+                    "completionTime": "2023-02-07T10:36:24Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:36:24Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-set-commit-status-pod",
+                    "startTime": "2023-02-07T10:36:17Z",
+                    "steps": [
+                        {
+                            "container": "step-show-params",
+                            "imageID": "quay.io/redhat-developer/gitops-commit-status@sha256:ef5b3b242bf3b42a3a5d3ff74b3c7d495c608297b7428ae57b8ece10954e7546",
+                            "name": "show-params",
+                            "terminated": {
+                                "containerID": "cri-o://65ca9d89add7c6502b824b108b9f761b4f10fa90c66a843bf2e28f837917de6f",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:36:23Z",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:36:23Z"
+                            }
+                        },
+                        {
+                            "container": "step-set-commit-status",
+                            "imageID": "image-registry.openshift-image-registry.svc:5000/openshift/cli@sha256:1fc458ece66c8d4184b45b5c495a372a96b47432ae5a39844cd5837e3981685b",
+                            "name": "set-commit-status",
+                            "terminated": {
+                                "containerID": "cri-o://e8587906a81236d56d753d0bf04cfd226562d4666fbd1210a19e9336748a9b8c",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:36:23Z",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:36:23Z"
+                            }
+                        }
+                    ],
+                    "taskSpec": {
+                        "params": [
+                            {
+                                "name": "GIT_REPO",
+                                "type": "string"
+                            },
+                            {
+                                "name": "REPO",
+                                "type": "string"
+                            },
+                            {
+                                "default": "git-host-access-token",
+                                "name": "GIT_TOKEN_SECRET_NAME",
+                                "type": "string"
+                            },
+                            {
+                                "default": "token",
+                                "name": "GIT_TOKEN_SECRET_KEY",
+                                "type": "string"
+                            },
+                            {
+                                "name": "COMMIT_SHA",
+                                "type": "string"
+                            },
+                            {
+                                "name": "DESCRIPTION",
+                                "type": "string"
+                            },
+                            {
+                                "name": "CONTEXT",
+                                "type": "string"
+                            },
+                            {
+                                "name": "STATE",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "image": "quay.io/redhat-developer/gitops-commit-status@sha256:ef5b3b242bf3b42a3a5d3ff74b3c7d495c608297b7428ae57b8ece10954e7546",
+                                "name": "show-params",
+                                "resources": {},
+                                "script": "#!/bin/sh\necho \"Git_REPO : \" marrober/myApp-cd\necho \"REPO : \" myApp-cd\necho \"GIT_TOKEN_SECRET_NAME : \" github-access-token\necho \"GIT_TOKEN_SECRET_KEY : \" token\necho \"COMMIT_SHA : \" 7cc5859c2ec13f571925dc755c5473d1b67f2b98\n\necho \"DESCRIPTION : \" Success status on commit to branch production-ready\necho \"CONTEXT : \" continuous-integration/Tekton\necho \"STATE : \" success"
+                            },
+                            {
+                                "env": [
+                                    {
+                                        "name": "GITHOSTACCESSTOKEN",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "token",
+                                                "name": "github-access-token"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "image-registry.openshift-image-registry.svc:5000/openshift/cli:latest",
+                                "name": "set-commit-status",
+                                "resources": {},
+                                "script": "#!/bin/sh\ncurl -s -H 'Content-Type: application/json' -X POST -u $GITHOSTACCESSTOKEN:x-oauth-basic -d '{\"state\":\"success\", \"description\":\"Success status on commit to branch production-ready\", \"context\":\"continuous-integration/Tekton\"}' https://api.github.com/repos/marrober/myApp-cd/statuses/7cc5859c2ec13f571925dc755c5473d1b67f2b98\n \u003e curl-cmd.sh\n\ncat curl-cmd.sh\nchmod u+x curl-cmd.sh\nsh ./curl-cmd.sh\necho \"completed\"\n"
+                            }
+                        ]
+                    }
+                }
+            },
+            "myapp-ci-prod-tr-g6b9x-set-commit-status-pending": {
+                "pipelineTaskName": "set-commit-status-pending",
+                "status": {
+                    "completionTime": "2023-02-07T10:35:36Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:35:36Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-set-commit-status-pending-pod",
+                    "startTime": "2023-02-07T10:35:29Z",
+                    "steps": [
+                        {
+                            "container": "step-show-params",
+                            "imageID": "quay.io/redhat-developer/gitops-commit-status@sha256:ef5b3b242bf3b42a3a5d3ff74b3c7d495c608297b7428ae57b8ece10954e7546",
+                            "name": "show-params",
+                            "terminated": {
+                                "containerID": "cri-o://4c0a47533a0af9729696dfe3a478fe37afa386961cc3a465f828cfdec0c1cfaa",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:35:34Z",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:35:34Z"
+                            }
+                        },
+                        {
+                            "container": "step-set-commit-status",
+                            "imageID": "image-registry.openshift-image-registry.svc:5000/openshift/cli@sha256:1fc458ece66c8d4184b45b5c495a372a96b47432ae5a39844cd5837e3981685b",
+                            "name": "set-commit-status",
+                            "terminated": {
+                                "containerID": "cri-o://aa3b01a6608c06e93cb5aa8b1582390dea7ff0426923a9a7dd0747498724622d",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:35:35Z",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:35:35Z"
+                            }
+                        }
+                    ],
+                    "taskSpec": {
+                        "params": [
+                            {
+                                "name": "GIT_REPO",
+                                "type": "string"
+                            },
+                            {
+                                "name": "REPO",
+                                "type": "string"
+                            },
+                            {
+                                "default": "git-host-access-token",
+                                "name": "GIT_TOKEN_SECRET_NAME",
+                                "type": "string"
+                            },
+                            {
+                                "default": "token",
+                                "name": "GIT_TOKEN_SECRET_KEY",
+                                "type": "string"
+                            },
+                            {
+                                "name": "COMMIT_SHA",
+                                "type": "string"
+                            },
+                            {
+                                "name": "DESCRIPTION",
+                                "type": "string"
+                            },
+                            {
+                                "name": "CONTEXT",
+                                "type": "string"
+                            },
+                            {
+                                "name": "STATE",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "image": "quay.io/redhat-developer/gitops-commit-status@sha256:ef5b3b242bf3b42a3a5d3ff74b3c7d495c608297b7428ae57b8ece10954e7546",
+                                "name": "show-params",
+                                "resources": {},
+                                "script": "#!/bin/sh\necho \"Git_REPO : \" marrober/myApp-cd\necho \"REPO : \" myApp-cd\necho \"GIT_TOKEN_SECRET_NAME : \" github-access-token\necho \"GIT_TOKEN_SECRET_KEY : \" token\necho \"COMMIT_SHA : \" 7cc5859c2ec13f571925dc755c5473d1b67f2b98\n\necho \"DESCRIPTION : \" Pending status on commit to branch production-ready\necho \"CONTEXT : \" continuous-integration/Tekton\necho \"STATE : \" pending"
+                            },
+                            {
+                                "env": [
+                                    {
+                                        "name": "GITHOSTACCESSTOKEN",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "token",
+                                                "name": "github-access-token"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "image-registry.openshift-image-registry.svc:5000/openshift/cli:latest",
+                                "name": "set-commit-status",
+                                "resources": {},
+                                "script": "#!/bin/sh\ncurl -s -H 'Content-Type: application/json' -X POST -u $GITHOSTACCESSTOKEN:x-oauth-basic -d '{\"state\":\"pending\", \"description\":\"Pending status on commit to branch production-ready\", \"context\":\"continuous-integration/Tekton\"}' https://api.github.com/repos/marrober/myApp-cd/statuses/7cc5859c2ec13f571925dc755c5473d1b67f2b98\n \u003e curl-cmd.sh\n\ncat curl-cmd.sh\nchmod u+x curl-cmd.sh\nsh ./curl-cmd.sh\necho \"completed\"\n"
+                            }
+                        ]
+                    }
+                }
+            },
+            "myapp-ci-prod-tr-g6b9x-update-and-commit-kustomization-file": {
+                "pipelineTaskName": "update-and-commit-kustomization-file",
+                "status": {
+                    "completionTime": "2023-02-07T10:35:29Z",
+                    "conditions": [
+                        {
+                            "lastTransitionTime": "2023-02-07T10:35:29Z",
+                            "message": "All Steps have completed executing",
+                            "reason": "Succeeded",
+                            "status": "True",
+                            "type": "Succeeded"
+                        }
+                    ],
+                    "podName": "myapp-ci-prod-tr-g6b9x-update-and-commit-kustomization-file-pod",
+                    "startTime": "2023-02-07T10:35:13Z",
+                    "steps": [
+                        {
+                            "container": "step-update-ops-repo-with-imagetag",
+                            "imageID": "quay.io/marrober/kustomize@sha256:47082b5a522ec2891b1cc209f636076ff59e3ba4933013ac42f8e06a5eae1a72",
+                            "name": "update-ops-repo-with-imagetag",
+                            "terminated": {
+                                "containerID": "cri-o://8c5c4312f9b38562cb0e61a15a00a60dd0bdacba68eb954c079515d70ff73239",
+                                "exitCode": 0,
+                                "finishedAt": "2023-02-07T10:35:29Z",
+                                "message": "[{\"key\":\"commit-id\",\"value\":\"7cc5859c2ec13f571925dc755c5473d1b67f2b98\\n\",\"type\":1}]",
+                                "reason": "Completed",
+                                "startedAt": "2023-02-07T10:35:25Z"
+                            }
+                        }
+                    ],
+                    "taskResults": [
+                        {
+                            "name": "commit-id",
+                            "type": "string",
+                            "value": "7cc5859c2ec13f571925dc755c5473d1b67f2b98\n"
+                        }
+                    ],
+                    "taskSpec": {
+                        "params": [
+                            {
+                                "name": "GIT_URL",
+                                "type": "string"
+                            },
+                            {
+                                "name": "GIT_REPO_NAME",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "name": "GIT_BRANCH",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "name": "GIT_PR_TARGET_BRANCH",
+                                "type": "string"
+                            },
+                            {
+                                "default": "",
+                                "name": "GIT_PATH_TO_CONTENT",
+                                "type": "string"
+                            },
+                            {
+                                "name": "GIT_USER_NAME",
+                                "type": "string"
+                            },
+                            {
+                                "name": "GIT_USER_EMAIL",
+                                "type": "string"
+                            },
+                            {
+                                "name": "GIT_COMMIT_COMMENT",
+                                "type": "string"
+                            },
+                            {
+                                "name": "IMAGE",
+                                "type": "string"
+                            },
+                            {
+                                "name": "LOCATION",
+                                "type": "string"
+                            }
+                        ],
+                        "results": [
+                            {
+                                "name": "commit-id",
+                                "type": "string"
+                            }
+                        ],
+                        "steps": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "GITHOSTACCESSTOKEN",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "key": "token",
+                                                "name": "github-access-token"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "image": "quay.io/marrober/kustomize:latest",
+                                "name": "update-ops-repo-with-imagetag",
+                                "resources": {},
+                                "script": "#!/bin/sh\necho \"Git URL : \" github.com/marrober/myApp-cd\".git\"\necho \"Git Repo name : \" myApp-cd\necho \"Git branch for change : \" production-ready\necho \"Git branch target for pull request : \" production\necho \"Path to content in git repo : \" env/03-production\necho \"Username for git changes : \" Mark Roberts\necho \"Email address for git changes : \" mroberts@redhat.com\necho \"Git commit comment : \" Update from ci process - production\necho \"Image URL to be patched : \" quay.io/marrober/myapp:905d-rfkhn\ncd /workspace/files\nmkdir production\ncd production\npwd\ngit config --global user.email mroberts@redhat.com\ngit config --global user.name Mark Roberts\nls -alR\ngit clone https://${GITHOSTACCESSTOKEN}@github.com/marrober/myApp-cd.git\necho \"-----------------------------------------------------------------\"\necho \"view content of directory\"\necho \"-----------------------------------------------------------------\"\ncd /workspace/files/production/myApp-cd/env/03-production\nls -al\necho \"-----------------------------------------------------------------\"\necho \"Select branch\"\ngit checkout production-ready\necho \"-----------------------------------------------------------------\"\necho \"File before change\"\necho \"-----------------------------------------------------------------\"\ncat kustomization.yaml\nkustomize edit set image quay.io/marrober/myapp:905d-rfkhn\necho \"-----------------------------------------------------------------\"\necho \"File after change\"\necho \"-----------------------------------------------------------------\"\ncat kustomization.yaml\ncd /workspace/files/production/myApp-cd\ngit add .\ngit commit -m \"Update from ci process - production\"\necho \"-----------------------------------------------------------------\"\ngit push -u\ngit rev-parse HEAD \u003e /tekton/results/commit-id\ncat /tekton/results/commit-id\nif [ -z \"production\" ]\nthen\n\n\n  echo \"Pull request is not required\"\n\nelse\n\n\n  echo \"-----------------------------------------------------------------\"\n\n  echo \"Create pull request\"\n\n  echo \"-----------------------------------------------------------------\"\n\n  echo $GITHOSTACCESSTOKEN \u003e gh-token.txt\n\n  gh auth login --with-token \u003c gh-token.txt\n\n  rm -rf gh-token.txt\n\n  gh pr create --fill --head production-ready --base production\n\nfi\n",
+                                "securityContext": {
+                                    "capabilities": {
+                                        "add": [
+                                            "SETFCAP"
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "workspaces": [
+                            {
+                                "name": "files"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

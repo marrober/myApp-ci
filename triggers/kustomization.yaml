@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- 01-trigger-binding-main-ci.yaml
+- 01-trigger-template-main-ci.yaml
+- 02-trigger-binding-base-image.yaml
+- 02-trigger-template-base-image.yaml
+- 03-trigger-binding-production-ci.yaml
+- 03-trigger-template-production-ci.yaml
+- event-listener-route.yaml
+- event-listener.yaml
