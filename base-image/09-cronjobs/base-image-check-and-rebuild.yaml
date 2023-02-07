@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-qrbn4.qrbn4.sandbox2884.opentlc.com
+            - http://console-openshift-console.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com
           restartPolicy: OnFailure
