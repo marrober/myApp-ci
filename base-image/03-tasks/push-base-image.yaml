@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: push-base-image
@@ -37,7 +37,7 @@ spec:
       image: registry.redhat.io/rhel8/buildah
       securityContext:
         capabilities:
-          add: ["SETFCAP"]      
+          add: ["SETFCAP"]
       volumeMounts:
         - name: quay-auth-secret
           mountPath: /etc/secret-volume
