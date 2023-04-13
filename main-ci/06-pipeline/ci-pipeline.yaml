@@ -202,7 +202,7 @@ spec:
     - name: files
       workspace: files
 ##------------------------------------------------------------------
-# Iniitate the ArgoCD sync operation for the development environment
+# Inititate the ArgoCD sync operation for the development environment
 ##------------------------------------------------------------------
   - name: sync-argocd-for-development
     params:
