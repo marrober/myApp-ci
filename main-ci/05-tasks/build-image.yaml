@@ -31,7 +31,6 @@ spec:
         - $(resources.outputs.intermediate-image.url)
         - .
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
