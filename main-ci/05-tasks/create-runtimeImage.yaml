@@ -33,13 +33,10 @@ spec:
       type: string
     - name: pipelineRunName
       type: string
-  resources:
-    inputs:
-      - name: intermediate-image
-        type: image
-    outputs:
-      - name: runtime-image
-        type: image
+    - name: intermediate-image
+      type: string
+    - name: runtime-image
+      type: string
   results:
     - name: new-image-repo-location
     - name: new-tag
@@ -50,7 +47,7 @@ spec:
         - '-c'
       args:
         - |-
-          echo "FROM localhost/$(resources.inputs.intermediate-image.url) as intermediate-image" > ext-dockerfile.gen
+          echo "FROM localhost/$(params.intermediate-image) as intermediate-image" > ext-dockerfile.gen
           echo "FROM $(params.runtime_base_image) as runtime-image" >> ext-dockerfile.gen
           echo "COPY --from=intermediate-image /home/maven/target/liberty-rest-app.war /config/apps/liberty-rest-app.war" >> ext-dockerfile.gen
           echo "COPY --from=intermediate-image /home/maven/target/server.xml /config/server.xml" >> ext-dockerfile.gen
@@ -66,7 +63,6 @@ spec:
           cat ext-dockerfile.gen
           echo "------------------------------"
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/s2i-rhel-8:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -86,10 +82,9 @@ spec:
         - '--root'
         - '/files/buildah-containers'
         - '-t'
-        - $(resources.outputs.runtime-image.url)
+        - $(params.runtime-image)
         - .
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -106,7 +101,7 @@ spec:
 
         echo $var1
 
-        var2=${var1:0:4}
+ storage       var2=${var1:0:4}
 
         var3=$(params.pipelineRunName)
 
@@ -122,12 +117,11 @@ spec:
 
         --tls-verify=$(params.TLSVERIFY) --root /files/buildah-containers \
 
-        $(resources.outputs.runtime-image.url) \
+        $(params.runtime-image) \
 
-        docker://$(resources.outputs.runtime-image.url):$tag
+        docker://$(params.runtime-image):$tag
 
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]

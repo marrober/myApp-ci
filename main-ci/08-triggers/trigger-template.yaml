@@ -22,13 +22,6 @@ spec:
       serviceAccountName: pipeline
       pipelineRef:
         name: myapp-ci-pipeline
-      resources:
-        - name: intermediate-image
-          resourceRef:
-            name: myapp-ci-intermediate
-        - name: runtime-image
-          resourceRef:
-            name: myapp-runtime
       params:
         - name: STORAGE_DRIVER
           value: vfs
@@ -43,6 +36,10 @@ spec:
           value: quay.io/marrober/openliberty:latest
         - name: repo_type
           value: github.com
+        - name: runtime-image
+          value: image-registry.openshift-image-registry.svc:5000/myapp-ci/myapp-runtime
+        - name: intermediate-image
+          value: intermediate 
         - name: myapp-cd-git-url
           value: marrober/myApp-cd
         - name: my-app-cd-git-repo-name

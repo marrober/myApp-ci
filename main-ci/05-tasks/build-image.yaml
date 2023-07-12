@@ -11,10 +11,11 @@ spec:
     - name: STORAGE_DRIVER
       description: The Buildah storage STORAGE_DRIVER.
       type: string
-  resources:
-    outputs:
-      - name: intermediate-image
-        type: image
+    - name: intermediate-image
+      type: string
+  workspaces:
+    - name: files
+      mountPath: /files
   steps:
     - name: build
       command:
@@ -28,14 +29,12 @@ spec:
         - '-f'
         - /files/source/dockerfile/build-src-dockerfile
         - '-t'
-        - $(resources.outputs.intermediate-image.url)
+        - $(params.intermediate-image)
         - .
-      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci-gl/buildah:latest
       securityContext:
         capabilities:
           add: ["SETFCAP"]
       workingDir: /files/source
       resources: {}
-  workspaces:
-  - name: files
-    mountPath: /files
+  

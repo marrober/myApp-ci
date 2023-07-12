@@ -5,11 +5,6 @@ metadata:
     pipeline.openshift.io/type: kubernetes
   name: myapp-ci-pipeline
 spec:
-  resources:
-  - name: intermediate-image
-    type: image
-  - name: runtime-image
-    type: image
   params:
   - name: STORAGE_DRIVER            # Used for the build step to tell Buildah how to store images
     type: string
@@ -33,6 +28,10 @@ spec:
   - name: runtime_base_image        # Input base image into which the build jar file is injected
     type: string
   - name: myapp-cd-git-url          # Continuous delivery git repository url
+    type: string
+  - name: intermediate-image
+    type: string
+  - name: runtime-image
     type: string
   - name: repo_type
     type: string
@@ -110,10 +109,8 @@ spec:
     params:
     - name: STORAGE_DRIVER
       value: $(params.STORAGE_DRIVER)
-    resources:
-      outputs:
-      - name: intermediate-image
-        resource: intermediate-image
+    - name: intermediate-image
+      resource: intermediate-image
     taskRef:
       kind: Task
       name: build
@@ -154,13 +151,10 @@ spec:
       value: $(context.pipelineRun.name)
     - name: pipelineName
       value: $(context.pipeline.name)
-    resources:
-      inputs:
-      - name: intermediate-image
-        resource: intermediate-image
-      outputs:
-      - name: runtime-image
-        resource: runtime-image
+    - name: intermediate-image
+      resource: intermediate-image
+    - name: runtime-image
+      resource: runtime-image
     taskRef:
       kind: Task
       name: create-runtime-image
