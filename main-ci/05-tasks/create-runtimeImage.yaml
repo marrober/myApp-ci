@@ -101,7 +101,7 @@ spec:
 
         echo $var1
 
- storage       var2=${var1:0:4}
+        var2=${var1:0:4}
 
         var3=$(params.pipelineRunName)
 
