@@ -46,8 +46,6 @@ spec:
 
         chmod +x ./roxctl  > /dev/null
 
-        yum install jq -y -q
-
         failTask="false"
 
         echo "image to be scanned : $(params.public-url)"
