@@ -110,7 +110,7 @@ spec:
     - name: STORAGE_DRIVER
       value: $(params.STORAGE_DRIVER)
     - name: intermediate-image
-      resource: intermediate-image
+      value: intermediate-image
     taskRef:
       kind: Task
       name: build
@@ -152,9 +152,9 @@ spec:
     - name: pipelineName
       value: $(context.pipeline.name)
     - name: intermediate-image
-      resource: intermediate-image
+      value: intermediate-image
     - name: runtime-image
-      resource: runtime-image
+      value: runtime-image
     taskRef:
       kind: Task
       name: create-runtime-image
