@@ -152,9 +152,9 @@ spec:
     - name: pipelineName
       value: $(context.pipeline.name)
     - name: intermediate-image
-      value: intermediate-image
+      value: $(params.intermediate-image)
     - name: runtime-image
-      value: runtime-image
+      value: $(params.runtime-image)
     taskRef:
       kind: Task
       name: create-runtime-image
