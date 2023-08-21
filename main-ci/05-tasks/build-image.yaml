@@ -31,7 +31,7 @@ spec:
         - '-t'
         - $(params.intermediate-image)
         - .
-      image: image-registry.openshift-image-registry.svc:5000/myapp-ci-gl/buildah:latest
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       securityContext:
         capabilities:
           add: ["SETFCAP"]
