@@ -8,8 +8,6 @@ resources:
 - 02-rolebindings/pipeline-service-role.yaml
 - 02-rolebindings/pipeline-service-rolebinding.yaml
 - 03-image-streams/containerImageStream-RuntimeImage.yaml
-- 04-resources/imageResource-Intermediate.yaml
-- 04-resources/imageResource-Runtime.yaml
 - 05-tasks/build-image.yaml
 - 05-tasks/create-runtimeImage.yaml
 - 05-tasks/update-and-commit-kustomization-file.yaml
