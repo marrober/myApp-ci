@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.conroe.demolab.local/
+            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-dfldv.dynamic.opentlc.com/
           restartPolicy: OnFailure
