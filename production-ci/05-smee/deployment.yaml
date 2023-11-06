@@ -24,5 +24,5 @@ spec:
               "--saveDir",
               "/tmp/save",
               "https://smee.io/6mz30aVAA29kWkE",
-              "myapp-github-ci-prod-listener-myapp-ci.apps.cluster-dfldv.dynamic.opentlc.com",
+              "http://myapp-github-ci-prod-listener-myapp-ci.apps.cluster-dfldv.dynamic.opentlc.com",
             ]
