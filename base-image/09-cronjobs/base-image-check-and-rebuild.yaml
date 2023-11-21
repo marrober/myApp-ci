@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: base-image-check-and-rebuild
 spec:
-  schedule: "0 */12 * * *"            # Run the task every 12 hours
+  schedule: "0 */2 * * *"            # Run the task every 2 hours
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
