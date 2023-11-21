@@ -15,7 +15,7 @@ spec:
         app: gosmee
     spec:
       containers:
-        - image: quay.io/marrober/gosmee:latest
+        - image: image-registry.openshift-image-registry.svc:5000/myapp-ci/gosmee:latest
           imagePullPolicy: IfNotPresent
           name: gosmee
           args:
