@@ -15,7 +15,7 @@ spec:
         app: gosmee
     spec:
       containers:
-        - image: https://default-route-openshift-image-registry.apps.cluster-84m6f-1.sandbox851.opentlc.com/myapp-ci/gosmee:latest
+        - image: default-route-openshift-image-registry.apps.cluster-84m6f-1.sandbox851.opentlc.com/myapp-ci/gosmee:latest
           imagePullPolicy: IfNotPresent
           name: gosmee
           args:
