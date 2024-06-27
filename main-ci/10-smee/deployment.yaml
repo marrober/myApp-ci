@@ -23,6 +23,6 @@ spec:
               "client",
               "--saveDir",
               "/tmp/save",
-              "smee.io/3aC3MfW0AoBzRW6",
-              "myapp-github-ci-listener-myapp-ci.apps.cluster-84m6f-1.sandbox851.opentlc.com"
+              "https://smee.io/3aC3MfW0AoBzRW6",
+              "http://myapp-github-ci-listener-myapp-ci.apps.cluster-84m6f-1.sandbox851.opentlc.com"
             ]
