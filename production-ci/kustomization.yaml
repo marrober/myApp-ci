@@ -7,4 +7,3 @@ resources:
 - 03-triggers/event-listener-route.yaml
 - 03-triggers/trigger-binding.yaml
 - 03-triggers/trigger-template.yaml
-- 05-smee/deployment.yaml
