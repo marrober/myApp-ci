@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-xjcj4.xjcj4.sandbox1665.opentlc.com/
+            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-gffzv.gffzv.sandbox2394.opentlc.com/
           restartPolicy: OnFailure
