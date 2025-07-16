@@ -15,7 +15,7 @@ spec:
       metadata:
         creationTimestamp: null
         labels:
-          tekton.dev/pipeline: pacman
+          tekton.dev/pipeline: myapp-ci
       spec:
         accessModes:
         - ReadWriteOnce
@@ -25,10 +25,10 @@ spec:
   params:
     # Replace with Github URL to project repository.
     - name: github-url
-      value: https://github.com/marrober/pacman.git
+      value: https://github.com/marrober/myapp-source.git
     # Replace with path to target manifest file within workspace (e.g., "pom.xml" or "path/to/my/project/pom.xml")
     - name: manifest-file-path
-      value: src
+      value: .
     - name: output-file-path
       value: redhat-dependency-analytics-report.json
     # Replace with base image where Exhort Javascript API and required dependencies are installed.
