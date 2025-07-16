@@ -28,7 +28,7 @@ spec:
       value: https://github.com/marrober/myapp-source.git
     # Replace with path to target manifest file within workspace (e.g., "pom.xml" or "path/to/my/project/pom.xml")
     - name: manifest-file-path
-      value: .
+      value: pom.xml
     - name: output-file-path
       value: redhat-dependency-analytics-report.json
     # Replace with base image where Exhort Javascript API and required dependencies are installed.

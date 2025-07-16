@@ -139,6 +139,19 @@ spec:
 
         # execute RHDA
         sh /rhda.sh "$MANIFEST_FILE_PATH" "$OUTPUT_FILE_PATH"
+    - name: display-results
+      image: $(params.rhda-image)
+      workingDir: $(workspaces.output.path)
+      volumeMounts:
+        - mountPath: /shared
+          name: shared-data
+      script: |
+        #!/bin/sh
+
+        ls -al 
+
+        cat redhat-dependency-analytics-report.json
+
   volumes:
     - name: shared-data
   
