@@ -33,7 +33,7 @@ spec:
       value: redhat-dependency-analytics-report.json
     # Replace with base image where Exhort Javascript API and required dependencies are installed.
     - name: rhda-image
-      value: image-registry.openshift-image-registry.svc:5000/pacman-ci/exhort-javascript-api:latest
+      value: image-registry.openshift-image-registry.svc:5000/myapp-ci/exhort-javascript-api:latest
     # Replace with base image including the desired Python version.
     - name: python-image
       value: python:3.11
