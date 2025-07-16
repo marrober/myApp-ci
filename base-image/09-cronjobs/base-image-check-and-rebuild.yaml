@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: base-image-check-and-rebuild
 spec:
-  schedule: "0 */2 * * *"            # Run the task every 2 hours
+  schedule: "0 */6 * * *"            # Run the task every 2 hours
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
@@ -23,5 +23,5 @@ spec:
             - -s
             - -d
             - "{}"
-            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-ktrst.ktrst.sandbox1131.opentlc.com/
+            - http://base-image-github-ci-listener-myapp-ci.apps.cluster-gffzv.gffzv.sandbox2394.opentlc.com/
           restartPolicy: OnFailure
