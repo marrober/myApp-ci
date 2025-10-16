@@ -69,11 +69,7 @@ spec:
 
         git clone ${PARAM_URL} 
 
-        ls -alR
-
         cd ${WORKSPACE_OUTPUT_PATH}/$(params.source-clone-target-path)/$(params.repoName)
-
-        ls -alR
 
         git checkout ${PARAM_REVISION}
 
