@@ -1,0 +1,18 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: kustomize
+  namespace: myapp-ci
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: latest
+      annotations: null
+      from:
+        kind: DockerImage
+        name: 'quay.io/marrober/kustomize:latest'
+      importPolicy:
+        importMode: Legacy
+      referencePolicy:
+        type: Source

@@ -1,0 +1,18 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: gitops-commit-status
+  namespace: myapp-ci
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: latest
+      annotations: null
+      from:
+        kind: DockerImage
+        name: 'quay.io/redhat-developer/gitops-commit-status:v0.0.2'
+      importPolicy:
+        importMode: Legacy
+      referencePolicy:
+        type: Source

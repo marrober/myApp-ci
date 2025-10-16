@@ -1,0 +1,18 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: s2i-rhel-8
+  namespace: myapp-ci
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: latest
+      annotations: null
+      from:
+        kind: DockerImage
+        name: 'registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8'
+      importPolicy:
+        importMode: Legacy
+      referencePolicy:
+        type: Source
