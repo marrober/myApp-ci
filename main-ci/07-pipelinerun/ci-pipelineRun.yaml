@@ -12,6 +12,8 @@ spec:
       value: main
     - name: source-git-repo-name
       value: myapp-source
+    - name: source-clone-target-path
+      value: source-clone      
     - name: STORAGE_DRIVER
       value: vfs
     - name: gitrepository_fullname

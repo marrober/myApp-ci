@@ -15,6 +15,8 @@ spec:
     type: string
   - name: source-git-repo-name      # Repository name and the directory into which it will be cloned
     type: string
+  - name: source-clone-target-path
+    type: string
   - name: gitrepository_fullname    # Application source code git repository full name
     type: string
   - name: commit_prior_revision     # Application source code git commit id (most recent commit) - Only used when triggered by a Tekton trigger
@@ -97,6 +99,8 @@ spec:
     - name: verbose
       value: 'true'
     - name: subdirectory
+      value: $(params.source-clone-target-path)
+    - name: repoName
       value: $(params.source-git-repo-name)
     taskRef:
       kind: Task

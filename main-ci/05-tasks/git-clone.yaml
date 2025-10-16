@@ -22,6 +22,8 @@ spec:
       description: Subdirectory into which the repo will be cloned in the output workspace.
       type: string
       default: ""
+    - name: repoName
+      type: string
     - name: verbose
       description: Log level.
       type: string
@@ -61,9 +63,9 @@ spec:
 
         cd ${WORKSPACE_OUTPUT_PATH}
 
-        mkdir clone-location
+        mkdir $(params.source-clone-target-path)
 
-        cd clone-location
+        cd $(params.source-clone-target-path)
 
         pwd
 
@@ -71,7 +73,7 @@ spec:
 
         ls -alR
 
-        cd ${WORKSPACE_OUTPUT_PATH}/clone-location/${REPO_NAME}
+        cd ${WORKSPACE_OUTPUT_PATH}$(params.source-clone-target-path)/$(params.$(params.repoName)
 
         ls -alR
 
