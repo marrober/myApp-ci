@@ -17,19 +17,19 @@ spec:
       type: string
   workspaces:
     - name: files
-      mountPath: /files
   steps:
-    - name: ls
+    - name: ls-1
       command:
         - ls
         - -al
-        - /files/source/
+        - /$(workspaces.files.path)
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
-      workingDir: /files/source
-      resources: {}
+    - name: ls-2
+      command:
+        - ls
+        - -al
+        - /$(workspaces.files.path)/$(params.path)
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
     - name: build
       command:
         - buildah
@@ -37,10 +37,10 @@ spec:
         - '--tls-verify=$(params.TLSVERIFY)'
         - '--storage-driver=$(params.STORAGE_DRIVER)'
         - '--root'
-        - '/files/buildah-containers'
+        - '/$(workspaces.files.path)/buildah-containers'
         - '--layers'
         - '-f'
-        - /files/source/$(params.path)/dockerfile/build-src-dockerfile
+        - /$(workspaces.files.path)/$(params.path)/dockerfile/build-src-dockerfile
         - '-t'
         - $(params.intermediate-image)
         - .
@@ -48,6 +48,6 @@ spec:
       securityContext:
         capabilities:
           add: ["SETFCAP"]
-      workingDir: /files/source
+      workingDir: /$(workspaces.files.path)/source
       resources: {}
   
