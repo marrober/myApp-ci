@@ -17,6 +17,8 @@ spec:
     type: string
   - name: source-clone-target-path
     type: string
+  - name: repoName
+    type: string
   - name: gitrepository_fullname    # Application source code git repository full name
     type: string
   - name: commit_prior_revision     # Application source code git commit id (most recent commit) - Only used when triggered by a Tekton trigger
