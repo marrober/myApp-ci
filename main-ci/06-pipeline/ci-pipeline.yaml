@@ -97,7 +97,7 @@ spec:
     - name: verbose
       value: 'false'
     - name: subdirectory
-      value: source
+      value: src
     - name: repoName
       value: $(params.source-git-repo-name)
     taskRef:
