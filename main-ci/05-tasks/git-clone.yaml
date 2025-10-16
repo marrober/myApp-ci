@@ -59,6 +59,8 @@ spec:
 
         cd ${WORKSPACE_OUTPUT_PATH}
 
+        ls -al
+
         mkdir $(params.source-clone-target-path)
 
         cd $(params.source-clone-target-path)
