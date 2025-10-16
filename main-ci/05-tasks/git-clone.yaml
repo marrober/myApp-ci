@@ -222,7 +222,9 @@ spec:
 
         cd "${WORKSPACE_OUTPUT_PATH}"
 
-        pwd
+        mkdir "${PARAM_SUBDIRECTORY}"
+
+        ls -al
 
         git clone ${PARAM_URL} 
 
