@@ -23,7 +23,7 @@ spec:
       command:
         - ls
         - -al
-        - /files/source/$(params.path)
+        - /files/source/
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       securityContext:
         capabilities:
