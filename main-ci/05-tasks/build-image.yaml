@@ -37,12 +37,14 @@ spec:
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
     - name: ls-docker-content-1
       command:
-        - ls -al
+        - ls 
+        - -al
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       workingDir: /$(workspaces.files.path)/$(params.path)
     - name: ls-docker-content-2
       command:
-        - ls -al
+        - ls 
+        -al
         - src/main/liberty/config/server.xml
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       workingDir: /$(workspaces.files.path)/$(params.path)
