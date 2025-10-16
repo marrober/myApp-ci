@@ -51,9 +51,6 @@ spec:
         value: $(params.url)
       - name: PARAM_REVISION
         value: $(params.revision)
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65532
       script: |
         #!/usr/bin/env sh
         set -eu
@@ -62,15 +59,21 @@ spec:
           set -x
         fi
 
-        CHECKOUT_DIR="${WORKSPACE_OUTPUT_PATH}/${PARAM_SUBDIRECTORY}"
+        cd ${WORKSPACE_OUTPUT_PATH}
 
-        mkdir -p "${CHECKOUT_DIR}"
+        mkdir clone-location
 
-        ls -al ${WORKSPACE_OUTPUT_PATH}
+        cd clone-location
+
+        pwd
 
         git clone ${PARAM_URL} 
 
-        cd ${REPO_NAME}
+        ls -alR
+
+        cd ${WORKSPACE_OUTPUT_PATH}/clone-location/${REPO_NAME}
+
+        ls -alR
 
         git checkout ${PARAM_REVISION}
 
