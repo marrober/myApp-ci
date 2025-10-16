@@ -48,6 +48,6 @@ spec:
       securityContext:
         capabilities:
           add: ["SETFCAP"]
-      workingDir: /$(workspaces.files.path)/source
+      workingDir: /$(workspaces.files.path)/$(params.path)
       resources: {}
   
