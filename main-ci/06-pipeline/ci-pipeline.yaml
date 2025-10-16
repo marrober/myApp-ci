@@ -95,10 +95,8 @@ spec:
     - name: revision
       value: $(params.source-git-revision)
     - name: verbose
-      value: 'false'
+      value: 'true'
     - name: subdirectory
-      value: $(params.source-git-repo-name)
-    - name: repoName
       value: $(params.source-git-repo-name)
     taskRef:
       kind: Task
@@ -372,9 +370,7 @@ spec:
     - name: revision
       value: $(params.my-app-cd-git-repo-branch-qa)
     - name: verbose
-      value: 'false'
-    - name: repoName
-      value: $(params.my-app-cd-git-repo-name)
+      value: 'true'
     taskRef:
       kind: Task
       name:  git-clone
