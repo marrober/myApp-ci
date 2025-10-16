@@ -13,6 +13,8 @@ spec:
     type: string
   - name: source-git-revision       # Application source code git branch or tag
     type: string
+  - name: source-git-repo-name      # Repository name and the directory into which it will be cloned
+    type: string
   - name: gitrepository_fullname    # Application source code git repository full name
     type: string
   - name: commit_prior_revision     # Application source code git commit id (most recent commit) - Only used when triggered by a Tekton trigger
@@ -96,6 +98,8 @@ spec:
       value: 'false'
     - name: subdirectory
       value: source
+    - name: repoName
+      value: $(params.source-git-repo-name)
     taskRef:
       kind: Task
       name:  git-clone
@@ -369,6 +373,8 @@ spec:
       value: $(params.my-app-cd-git-repo-branch-qa)
     - name: verbose
       value: 'false'
+    - name: repoName
+      value: $(params.my-app-cd-git-repo-name)
     taskRef:
       kind: Task
       name:  git-clone

@@ -10,6 +10,8 @@ spec:
       value: https://github.com/marrober/myApp-source.git
     - name: source-git-revision
       value: main
+    - name: source-git-repo-name
+      value: myapp-source
     - name: STORAGE_DRIVER
       value: vfs
     - name: gitrepository_fullname
