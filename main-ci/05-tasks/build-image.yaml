@@ -13,10 +13,23 @@ spec:
       type: string
     - name: intermediate-image
       type: string
+    - name: path
+      type: string
   workspaces:
     - name: files
       mountPath: /files
   steps:
+    - name: ls
+      command:
+        - ls
+        - -al
+        - files/source/$(params.path)
+      image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+      workingDir: /files/source
+      resources: {}
     - name: build
       command:
         - buildah
@@ -27,7 +40,7 @@ spec:
         - '/files/buildah-containers'
         - '--layers'
         - '-f'
-        - /files/source/dockerfile/build-src-dockerfile
+        - /files/source/$(params.path)/dockerfile/build-src-dockerfile
         - '-t'
         - $(params.intermediate-image)
         - .

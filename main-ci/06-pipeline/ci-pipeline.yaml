@@ -117,6 +117,8 @@ spec:
       value: $(params.STORAGE_DRIVER)
     - name: intermediate-image
       value: $(params.intermediate-image)
+    - name: path
+      value: $(params.source-clone-target-path)/$(params.source-git-repo-name)
     taskRef:
       kind: Task
       name: build
