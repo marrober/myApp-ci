@@ -375,6 +375,10 @@ spec:
       value: $(params.my-app-cd-git-repo-branch-qa)
     - name: verbose
       value: 'true'
+    - name: source-clone-target-path
+      value: cd-qa
+    - name: repoName
+      value: $(params.my-app-cd-git-repo-name)
     taskRef:
       kind: Task
       name:  git-clone
