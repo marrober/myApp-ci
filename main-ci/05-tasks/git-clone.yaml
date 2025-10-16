@@ -220,13 +220,9 @@ spec:
           cleandir || true
         fi
 
-        ls -alR ${WORKSPACE_OUTPUT_PATH}
-
-        cd "${CHECKOUT_DIR}"
+        cd "${WORKSPACE_OUTPUT_PATH}"
 
         pwd
-
-        ls -al 
 
         git clone ${PARAM_URL} 
 
