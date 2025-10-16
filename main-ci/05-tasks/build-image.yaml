@@ -44,7 +44,7 @@ spec:
     - name: ls-docker-content-2
       command:
         - ls 
-        -al
+        - -al
         - src/main/liberty/config/server.xml
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
       workingDir: /$(workspaces.files.path)/$(params.path)
