@@ -220,6 +220,8 @@ spec:
           cleandir || true
         fi
 
+        ls -alR ${WORKSPACE_OUTPUT_PATH}
+
         cd "${CHECKOUT_DIR}"
 
         pwd
