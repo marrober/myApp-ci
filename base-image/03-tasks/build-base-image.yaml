@@ -25,6 +25,7 @@ spec:
       type: string
     - name: path
       type: string
+  steps:
     - name: build-base-image
       command:
         - buildah
