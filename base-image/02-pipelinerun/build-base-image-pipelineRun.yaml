@@ -10,6 +10,10 @@ spec:
       value: https://github.com/marrober/myApp-ci.git
     - name: git-revision
       value: main
+    - name: source-git-repo-name
+      value: myApp-ci
+    - name: source-clone-target-path
+      value: source-clone        
     - name: quay-io-account
       value: "marrober"
     - name: quay-io-repository

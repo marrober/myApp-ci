@@ -26,6 +26,10 @@ spec:
           value: $(tt.params.gitrepository.url)
         - name: git-revision
           value: $(tt.params.gitrevision)
+        - name: source-git-repo-name
+          value: myApp-ci
+        - name: source-clone-target-path
+          value: source-clone  
         - name: quay-io-account
           value: $(tt.params.quay-io-account)
         - name: quay-io-repository

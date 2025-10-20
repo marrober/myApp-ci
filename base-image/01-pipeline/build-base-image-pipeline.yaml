@@ -11,6 +11,10 @@ spec:
     type: string
   - name: git-revision
     type: string
+  - name: source-git-repo-name   
+    type: string
+  - name: source-clone-target-path
+    type: string
   - name: quay-io-account
     type: string
   - name: quay-io-repository
@@ -52,10 +56,12 @@ spec:
       value: $(params.git-revision)
     - name: verbose
       value: 'false'
-    - name: subdirectory
-      value: resources
+    - name: source-clone-target-path
+      value: $(params.source-clone-target-path)
+    - name: repoName
+      value: $(params.source-git-repo-name)
     taskRef:
-      kind: ClusterTask
+      kind: Task
       name:  git-clone
     when:
     - input: "$(tasks.image-build-check.results.scan-result)"

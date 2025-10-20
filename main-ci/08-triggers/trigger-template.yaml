@@ -78,6 +78,10 @@ spec:
           value: $(tt.params.gitrepository.fullname)
         - name: source-git-revision
           value: $(tt.params.gitrevision)
+        - name: source-git-repo-name
+          value: myApp-source
+        - name: source-clone-target-path
+          value: source-clone  
         - name: commit_prior_revision
           value: $(tt.params.commit.prior_revision)
         - name: commit_ref
