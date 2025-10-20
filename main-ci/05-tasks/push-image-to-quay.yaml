@@ -50,10 +50,10 @@ spec:
       resources:
         requests:
           memory: 500Mi
-          cpu: '0.25'
+          cpu: 250m
         limits:
           memory: 500Mi
-          cpu: '0.5'
+          cpu: 500m
     - name: buildah-tag-image
       command:
         - buildah
@@ -71,10 +71,10 @@ spec:
       resources:
         requests:
           memory: 500Mi
-          cpu: '0.25'
+          cpu: 250m
         limits:
           memory: 500Mi
-          cpu: '0.5'
+          cpu: 500m
     - name: push-image-to-quay
       command:
         - buildah
@@ -93,10 +93,10 @@ spec:
       resources:
          requests:
           memory: 500Mi
-          cpu: '0.25'
+          cpu: 250m
         limits:
           memory: 500Mi
-          cpu: '0.5'
+          cpu: 500m
       volumeMounts:
         - name: quay-auth-secret
           mountPath: /etc/secret-volume
