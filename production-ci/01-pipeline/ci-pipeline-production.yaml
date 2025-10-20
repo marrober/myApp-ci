@@ -11,7 +11,7 @@ spec:
     type: string
   - name: source-clone-target-path
     type: string
-  - name: repoName
+  - name: source-git-repo-name
     type: string
   - name: myapp-cd-git-url          # Continuous delivery git repository url
     type: string
