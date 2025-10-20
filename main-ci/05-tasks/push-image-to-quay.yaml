@@ -64,7 +64,6 @@ spec:
         - $(params.image-stream-location)
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
@@ -86,12 +85,11 @@ spec:
         - '/files/buildah-containers'
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/buildah:latest
-# Changes for skylake
       securityContext:
         capabilities:
           add: ["SETFCAP"]
       resources:
-         requests:
+        requests:
           memory: 500Mi
           cpu: 250m
         limits:
