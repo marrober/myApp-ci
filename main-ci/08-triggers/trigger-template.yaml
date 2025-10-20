@@ -107,6 +107,7 @@ spec:
             resources:
               requests:
                 storage: 20Gi
+            storageClassName: ocs-storagecluster-cephfs
       - name: resources
         volumeClaimTemplate:
           spec:
@@ -115,3 +116,4 @@ spec:
             resources:
               requests:
                 storage: 5Gi
+            storageClassName: ocs-storagecluster-cephfs
