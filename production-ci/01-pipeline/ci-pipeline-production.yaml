@@ -9,6 +9,10 @@ spec:
   params:
   - name: repo_type
     type: string
+  - name: source-clone-target-path
+    type: string
+  - name: repoName
+    type: string
   - name: myapp-cd-git-url          # Continuous delivery git repository url
     type: string
   - name: my-app-cd-git-repo-name   # Continuous delivery git repository name
