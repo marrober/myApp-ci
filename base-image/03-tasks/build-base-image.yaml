@@ -23,7 +23,8 @@ spec:
     - name: STORAGE_DRIVER
       description: The Buildah storage STORAGE_DRIVER
       type: string
-  steps :
+    - name: path
+      type: string
     - name: build-base-image
       command:
         - buildah
@@ -34,7 +35,7 @@ spec:
         - '/files/buildah-containers'
         - '--layers'
         - '-f'
-        - base-image/04-dockerfile/fix-open-liberty-image
+        - /$(workspaces.files.path)/$(params.path)/base-image/04-dockerfile/fix-open-liberty-image
         - '-t'
         - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
         - .
@@ -42,14 +43,14 @@ spec:
       securityContext:
         capabilities:
           add: ["SETFCAP"]
-      workingDir: /files/resources
+      workingDir: /$(workspaces.files.path)/$(params.path)
       resources:
         limits:
-          cpu: '4'
-          memory: 4000Mi
-        requests:
           cpu: '1'
-          memory: 1000Mi
+          memory: 500Mi
+        requests:
+          cpu: '0.25'
+          memory: 100Mi
   volumes:
     - name: quay-auth-secret
       secret:

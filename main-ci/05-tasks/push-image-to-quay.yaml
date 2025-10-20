@@ -49,11 +49,11 @@ spec:
           add: ["SETFCAP"]
       resources:
         requests:
-          memory: 2Gi
-          cpu: '1'
+          memory: 500Mi
+          cpu: '0.25'
         limits:
-          memory: 4Gi
-          cpu: '2'
+          memory: 500Mi
+          cpu: '0.5'
     - name: buildah-tag-image
       command:
         - buildah
@@ -70,11 +70,11 @@ spec:
           add: ["SETFCAP"]
       resources:
         requests:
-          memory: 2Gi
-          cpu: '1'
+          memory: 500Mi
+          cpu: '0.25'
         limits:
-          memory: 4Gi
-          cpu: '2'
+          memory: 500Mi
+          cpu: '0.5'
     - name: push-image-to-quay
       command:
         - buildah
@@ -91,12 +91,12 @@ spec:
         capabilities:
           add: ["SETFCAP"]
       resources:
-        requests:
-          memory: 2Gi
-          cpu: '1'
+         requests:
+          memory: 500Mi
+          cpu: '0.25'
         limits:
-          memory: 4Gi
-          cpu: '2'
+          memory: 500Mi
+          cpu: '0.5'
       volumeMounts:
         - name: quay-auth-secret
           mountPath: /etc/secret-volume
@@ -115,7 +115,6 @@ spec:
           cat $(results.quay-image-repo-location.path)
 
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
-      resources: {}
   volumes:
     - name: quay-auth-secret
       secret:
