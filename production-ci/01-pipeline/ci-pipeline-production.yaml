@@ -105,8 +105,12 @@ spec:
       value: $(params.my-app-cd-git-repo-branch)
     - name: verbose
       value: 'false'
+    - name: source-clone-target-path
+      value: $(params.source-clone-target-path)
+    - name: repoName
+      value: $(params.source-git-repo-name)
     taskRef:
-      kind: ClusterTask
+      kind: Tas
       name:  git-clone
     runAfter:
     - set-commit-status-pending

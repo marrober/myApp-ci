@@ -18,6 +18,10 @@ spec:
       params:
         - name: repo_type
           value: github.com
+        - name: source-git-repo-name
+          value: myApp-cd
+        - name: source-clone-target-path
+          value: source-clone     
         - name: myapp-cd-git-url
           value: marrober/myApp-cd
         - name: my-app-cd-git-repo-name
