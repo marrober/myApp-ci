@@ -15,6 +15,7 @@ resources:
 - 03-image-streams/kustomize.yaml
 - 03-image-streams/buildah.yaml
 - 03-image-streams/cli.yaml
+- 03-image-streams/maven.yaml
 - 05-tasks/build-image.yaml
 - 05-tasks/create-runtimeImage.yaml
 - 05-tasks/update-and-commit-kustomization-file.yaml
