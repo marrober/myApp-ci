@@ -38,7 +38,13 @@ spec:
               key: "token"
               name: "github-access-token"
       image: image-registry.openshift-image-registry.svc:5000/myapp-ci/kustomize:latest
-# Changes for skylake
+      resources:
+        requests:
+          memory: 500Mi
+          cpu: 250m
+        limits:
+          memory: 500Mi
+          cpu: 500m
       securityContext:
         capabilities:
           add: ["SETFCAP"]
