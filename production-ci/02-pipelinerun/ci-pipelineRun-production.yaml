@@ -38,7 +38,7 @@ spec:
     - name: recursive-search
       value: "true"
     - name: image
-      value: quay.io/marrober/myapp:483b-lc7s6
+      value: quay.io/marrober/myapp:483b-pf5bc
   workspaces:
   - name: resources
     volumeClaimTemplate:
